@@ -7,7 +7,7 @@ figure out where your friends are located in the usa.
 2) add coordinates of friends
 
 # Collaborators:
-Scotty Mikul
-Colton Krants
-Jonah Neugeboren
-Terrance Lewis
+1) Scotty Mikul
+2) Colton Krants
+3) Jonah Neugeboren
+4) Terrance Lewis
