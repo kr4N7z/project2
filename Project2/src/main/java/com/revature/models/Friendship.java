@@ -1,39 +1,52 @@
 package com.revature.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "friends")
 public class Friendship {
-	private int mainUserId;
-	private int otherUserId;
-	private boolean approved;
+	
+	@Id
+	@Column(name = "")
+	private int senderId;
+	@Id
+	@Column(name = "")
+	private int receiverId;
+	@Column(name = "")
+	private boolean status;
 	
 	public Friendship() {}
 	
-	public Friendship(int _mainUserId, int _otherUserId, boolean _approved) {
-		this.setMainUserId(_mainUserId);
-		this.setOtherUserId(_otherUserId);
-		this.setApproved(_approved);
+	public Friendship(int _mainUserId, int _otherUserId, boolean _status) {
+		this.setReceiverId(_mainUserId);
+		this.setReceiverId(_otherUserId);
+		this.setStatus(_status);
 	}
 
-	public int getMainUserId() {
-		return mainUserId;
+	public int getSenderId() {
+		return senderId;
 	}
 
-	public void setMainUserId(int mainUserId) {
-		this.mainUserId = mainUserId;
+	public void setSenderrId(int senderId) {
+		this.senderId = senderId;
 	}
 
-	public int getOtherUserId() {
-		return otherUserId;
+	public int getReceiverId() {
+		return receiverId;
 	}
 
-	public void setOtherUserId(int otherUserId) {
-		this.otherUserId = otherUserId;
+	public void setReceiverId(int receiverId) {
+		this.receiverId = receiverId;
 	}
 
-	public boolean isApproved() {
-		return approved;
+	public boolean getStatus() {
+		return status;
 	}
 
-	public void setApproved(boolean approved) {
-		this.approved = approved;
+	public void setStatus(boolean approved) {
+		this.status = approved;
 	}
 }
