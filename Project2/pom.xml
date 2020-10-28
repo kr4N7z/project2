@@ -65,6 +65,12 @@
 			<artifactId>jackson-datatype-jsr310</artifactId>
 			<version>2.9.7</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>5.4.21.Final</version>
+		</dependency>
 	</dependencies>
 	
 	<build>
