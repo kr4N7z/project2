@@ -7,6 +7,8 @@
 	xmlns="http://www.springframework.org/schema/beans">
 	<!--  Enable Spring MVC annotations -->
 	<mvc:annotation-driven></mvc:annotation-driven>
+	<!-- Make sure you tell Spring MVC where to scan for controllers -->
+	<context:component-scan base-package="com.revature.controller"></context:component-scan>
 	<!-- Set up our view resolver -->
 	<mvc:default-servlet-handler/>
 	
