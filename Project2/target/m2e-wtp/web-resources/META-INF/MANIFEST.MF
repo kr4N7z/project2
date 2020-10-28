@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 Manifest-Version: 1.0
 Built-By: Jonah Neugeboren
 Build-Jdk: 14.0.2
 Created-By: Maven Integration for Eclipse
 
+=======
+Manifest-Version: 1.0
+Built-By: terrance
+Build-Jdk: 14.0.2
+Created-By: Maven Integration for Eclipse
+
+>>>>>>> main
