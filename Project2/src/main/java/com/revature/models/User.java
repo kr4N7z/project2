@@ -28,11 +28,13 @@ public class User {
 	private String firstName;
 	@Column(name = "last_name")
 	private String lastName;
-	@Column(name = "last_location")
-	private PGpoint lastLocation;
+	@Column(name = "last_latitude")
+	private float lastLatitude;
+	@Column(name = "last_longitude")
+	private float lastLongitude;
 	@Column(name = "last_state")
 	private String lastState;
-	@Column(name = "create_on")
+	@Column(name = "created_on")
 	private Date createdOn;
 	@Column(name = "last_login")
 	private Date lastLogin;
@@ -74,11 +76,17 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public PGpoint getLastLocation() {
-		return lastLocation;
+	public float getLastLatitude() {
+		return lastLatitude;
 	}
-	public void setLastLocation(PGpoint lastLocation) {
-		this.lastLocation = lastLocation;
+	public void setLatitude(float lastLatitude) {
+		this.lastLatitude = lastLatitude;
+	}
+	public float getLastLongitude() {
+		return lastLongitude;
+	}
+	public void setLongitude(float lastLongitude) {
+		this.lastLongitude = lastLongitude;
 	}
 	public String getLastState() {
 		return lastState;
@@ -98,5 +106,20 @@ public class User {
 	public void setLastLogin(Date lastLogin) {
 		this.lastLogin = lastLogin;
 	}
+	public User(String userType, String email, String password, String firstName, String lastName, float lastLatitude,
+			float lastLongitude, String lastState, Date createdOn, Date lastLogin) {
+		super();
+		this.userType = userType;
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.lastLatitude = lastLatitude;
+		this.lastLongitude = lastLongitude;
+		this.lastState = lastState;
+		this.createdOn = createdOn;
+		this.lastLogin = lastLogin;
+	}
+	
 	
 }

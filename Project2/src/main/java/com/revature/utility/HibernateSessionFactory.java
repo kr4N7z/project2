@@ -28,8 +28,4 @@ public class HibernateSessionFactory {
 		
 		return sessionFactory.getCurrentSession();
 	}
-	
-	public static void main(String...args) {
-		
-	}
 }
