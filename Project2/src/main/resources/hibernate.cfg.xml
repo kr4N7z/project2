@@ -13,6 +13,7 @@
 		<property name="hibernate.current_session_context_class">thread</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<mapping class="com.revature.models.User"/>
+		<mapping class="com.revature.models.Friendship"></mapping>
 		<!-- <mapping class="com.revature.model.MonsterCard"/>
 		<mapping class="com.revature.model.CardClass"/>
 		<mapping class="com.revature.model.Realm"/> -->

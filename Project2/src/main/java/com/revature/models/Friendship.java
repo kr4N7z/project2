@@ -9,6 +9,10 @@ import javax.persistence.Table;
 @Table(name = "friends")
 public class Friendship {
 	
+	//Every friendship relation will have two entries so that the currently logged in user can always be represented as 'sender'
+	//when a request is sent it will make a single record
+	//when that request is approved, the recipient will also make a record, the reverse of the initial record
+	//and both records will be approved
 	@Id
 	@Column(name = "")
 	private int senderId;
