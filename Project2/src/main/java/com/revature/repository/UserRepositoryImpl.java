@@ -1,11 +1,19 @@
 package com.revature.repository;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.postgresql.geometric.PGpoint;
 
+import com.revature.models.Friendship;
 import com.revature.models.User;
 import com.revature.utility.HibernateSessionFactory;
 
@@ -28,4 +36,38 @@ public class UserRepositoryImpl implements UserRepository {
 			s.close();
 		}
 	}
+
+	@Override
+	public List<User> getFreinds(int senderId) {
+		Session s = null;
+		Transaction tx = null;
+		List<User> friends = new ArrayList<>();
+		
+		try {
+			Query query = s.createQuery("from Friendship f join f.receiverId where Friendship.senderId = :senderId");
+			query.setParameter("senderId", senderId);
+			friends = query.getResultList();
+			
+			tx.commit();
+		}catch(HibernateException e) {
+			e.printStackTrace();
+			tx.rollback();
+		}finally {
+			s.close();
+		}
+		
+		return friends;
+	}
+	
+//	public static void main(String[] args) {
+//		
+//		User u = new User("standard", "neweremail@email.com", "secret", "Ben", "Doe", 100.0f,
+//				100.0f,"Texas", Date.valueOf("2020-10-10"), Date.valueOf("2020-10-29"));
+//		Friendship f = new Friendship(2,4,true);
+//		
+//		UserRepositoryImpl uri = new UserRepositoryImpl();
+//		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
+//		
+//		frimpl.insertFriendship(f);
+//	}
 }
