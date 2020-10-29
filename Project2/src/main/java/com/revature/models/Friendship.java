@@ -14,12 +14,12 @@ public class Friendship {
 	//when that request is approved, the recipient will also make a record, the reverse of the initial record
 	//and both records will be approved
 	@Id
-	@Column(name = "")
+	@Column(name = "sender_id")
 	private int senderId;
 	@Id
-	@Column(name = "")
+	@Column(name = "receiver_id")
 	private int receiverId;
-	@Column(name = "")
+	@Column(name = "status")
 	private boolean status;
 	
 	public Friendship() {}
