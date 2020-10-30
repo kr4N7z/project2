@@ -5,11 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.revature.models.User;
-import com.revature.repository.UserRepositoryImpl;
 import com.revature.service.UserService;
 
 /*
@@ -22,6 +22,7 @@ import com.revature.service.UserService;
  */
 @Controller(value = "userController")
 @RequestMapping(path = "/user")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 	
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
