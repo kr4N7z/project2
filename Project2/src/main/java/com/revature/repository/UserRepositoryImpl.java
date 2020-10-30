@@ -59,15 +59,15 @@ public class UserRepositoryImpl implements UserRepository {
 		return friends;
 	}
 	
-//	public static void main(String[] args) {
-//		
-//		User u = new User("standard", "neweremail@email.com", "secret", "Ben", "Doe", 100.0f,
-//				100.0f,"Texas", Date.valueOf("2020-10-10"), Date.valueOf("2020-10-29"));
-//		Friendship f = new Friendship(2,4,true);
-//		
-//		UserRepositoryImpl uri = new UserRepositoryImpl();
-//		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
-//		
-//		frimpl.insertFriendship(f);
-//	}
+	public static void main(String[] args) {
+		
+		User u = new User("standard", "scotty@email.com", "secret", "Scotty", "Doe", 93.0f,
+				37.0f,"Georgia", Date.valueOf("2020-10-10"), Date.valueOf("2020-10-29"));
+		Friendship f = new Friendship(2,4,true);
+		
+		UserRepositoryImpl uri = new UserRepositoryImpl();
+		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
+		
+		uri.insert(u);
+	}
 }
