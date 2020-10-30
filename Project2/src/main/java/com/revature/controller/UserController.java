@@ -1,7 +1,18 @@
 package com.revature.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.revature.models.User;
+import com.revature.repository.UserRepository;
+import com.revature.repository.UserRepositoryImpl;
+import com.revature.service.UserService;
+
 
 /*
  * Using a Spring controller we can easily define endpoints and mappings! 
@@ -13,6 +24,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller(value = "userController")
 @RequestMapping(path = "/user")
+@JsonIgnoreProperties
 public class UserController {
+	UserService userService;
 	
+	UserController(){
+		userService = new UserService();
+	}
+	
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public void registertUser(@RequestBody User user) {
+		userService.register(user);
+	}
+	
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public void login(@RequestBody User user, HttpServletRequest req) {
+		userService.login(user.getEmail(), user.getPassword(), req);
+	}
 }
