@@ -1,6 +1,5 @@
 package com.revature.controller;
 
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -27,13 +26,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.revature.models.User;
 import com.revature.service.UserService;
 
-
 /*
- * Using a Spring controller we can easily define endpoints and mappings! 
+ * Using a Spring controller we can easily define endpoints and mappings!
  * its all annotation-driven!
- * 
+ *
  * Note that @Controller is a spring stereotype
- * 
+ *
  * First we need to define a mapping for this controller
  */
 @Controller(value = "userController")
@@ -42,16 +40,15 @@ import com.revature.service.UserService;
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 	UserService userService;
-	
+
 	UserController(){
 		userService = new UserService();
 	}
-	
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public void registertUser(@RequestBody User user) {
 		userService.register(user);
 	}
-	
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public void login(@RequestBody User user, HttpServletRequest req) {
@@ -60,8 +57,9 @@ public class UserController {
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 	public List<User> getFriends(HttpSession session) {
 		UserService us = new UserService();
-		List<User> friends = us.getFriends((User) session.getAttribute("user"));
-		
+
+		List<User> friends = us.getFriends((User) session.getAttribute("user"))
+
 		return friends;
 	}
 }

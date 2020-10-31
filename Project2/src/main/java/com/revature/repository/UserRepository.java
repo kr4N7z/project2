@@ -12,5 +12,4 @@ public interface UserRepository {
 	User findOneByEmail(String email);
 
 	List<User> getFreinds(int senderID);
-
 }
