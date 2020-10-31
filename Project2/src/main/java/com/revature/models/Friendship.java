@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "friends")
-public class Friendship {
+public class Friendship implements Serializable{
 	
 	//Every friendship relation will have two entries so that the currently logged in user can always be represented as 'sender'
 	//when a request is sent it will make a single record
