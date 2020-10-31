@@ -4,14 +4,22 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
+
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.postgresql.geometric.PGpoint;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 
 import com.revature.models.Friendship;
 import com.revature.models.User;
@@ -38,6 +46,26 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
+	public User findOneByEmail(String email) {
+		Session s = null;
+		Transaction tx = null;
+		User user = null;
+		
+		try {
+			s = HibernateSessionFactory.getSession();
+			CriteriaBuilder cb = s.getCriteriaBuilder();
+			CriteriaQuery<User> cq = cb.createQuery(User.class);
+			Root<User> root = cq.from(User.class);
+			cq.select(root).where(cb.equal(root.get("email"), email));
+			Query<User> q = s.createQuery(cq);
+			
+			user = q.getSingleResult();
+			tx.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+    }
+      		return user;
+  }
 	public List<User> getFreinds(int senderId) {
 		Session s = null;
 		Transaction tx = null;
@@ -52,10 +80,15 @@ public class UserRepositoryImpl implements UserRepository {
 		}catch(HibernateException e) {
 			e.printStackTrace();
 			tx.rollback();
+
 		}finally {
 			s.close();
 		}
 		
+		
+		
+
+
 		return friends;
 	}
 	
@@ -69,5 +102,5 @@ public class UserRepositoryImpl implements UserRepository {
 		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
 		
 		uri.insert(u);
-	}
+  }
 }
