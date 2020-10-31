@@ -58,7 +58,7 @@ public class UserController {
 	public List<User> getFriends(HttpSession session) {
 		UserService us = new UserService();
 
-		List<User> friends = us.getFriends((User) session.getAttribute("user"))
+		List<User> friends = us.getFriends((User) session.getAttribute("user"));
 
 		return friends;
 	}
