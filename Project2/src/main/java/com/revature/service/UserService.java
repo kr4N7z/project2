@@ -27,7 +27,7 @@ public class UserService {
 			req.getSession();
 			req.setAttribute("userid", user.getUserID());
 		}
-		
+
 	}
 	public void logout(HttpServletRequest req) {
 		req.getSession().invalidate();

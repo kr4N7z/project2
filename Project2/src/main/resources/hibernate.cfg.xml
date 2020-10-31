@@ -14,6 +14,7 @@
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<mapping class="com.revature.models.User"/>
 		<mapping class="com.revature.models.Friendship"/>
+		<mapping class="com.revature.models.Messages"/>
 		
 	</session-factory>
 </hibernate-configuration>
