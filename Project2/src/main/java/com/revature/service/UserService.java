@@ -1,6 +1,8 @@
 package com.revature.service;
 
+
 import java.sql.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,4 +36,9 @@ public class UserService {
 		User newUser = new User("user",user.getEmail(),user.getPassword(),user.getFirstName(),user.getLastName(),0f,0f,"",new Date(0),new Date(0));
 		userRepo.insert(newUser);
 	}
+	public List<User> getFriends(User u){
+		return userRepo.getFreinds(u.getUserID());
+
+	}
+
 }
