@@ -64,6 +64,8 @@ public class UserRepositoryImpl implements UserRepository {
 		List<User> friends = new ArrayList<>();
 
 		try {
+			s = HibernateSessionFactory.getSession();
+			tx = s.beginTransaction();
 			Query query = s.createQuery("from Friendship f join f.receiverId where Friendship.senderId = :senderId");
 			query.setParameter("senderId", senderId);
 			friends = query.getResultList();
@@ -75,12 +77,26 @@ public class UserRepositoryImpl implements UserRepository {
 		}finally {
 			s.close();
 		}
-
-
-
-
-
 		return friends;
+	}
+	public List<User> getAllUsers() {
+		Session s = null;
+		Transaction tx = null;
+		List<User> users = new ArrayList<>();
+
+		try {
+			s = HibernateSessionFactory.getSession();
+			tx = s.beginTransaction();
+			
+			users = s.createQuery("FROM users", User.class).getResultList();
+			tx.commit();
+		}catch(HibernateException e) {
+			e.printStackTrace();
+			tx.rollback();
+		}finally {
+			s.close();
+		}
+		return users;
 	}
 
 }

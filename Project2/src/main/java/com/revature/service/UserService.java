@@ -36,9 +36,12 @@ public class UserService {
 		User newUser = new User("user",user.getEmail(),user.getPassword(),user.getFirstName(),user.getLastName(),0f,0f,"",new Date(0),new Date(0));
 		userRepo.insert(newUser);
 	}
-	public List<User> getFriends(User u){
-		return userRepo.getFreinds(u.getUserID());
+	public List<User> getFriends(int userId){
+		return userRepo.getFreinds(userId);
 
+	}
+	public List<User> getAllUsers(){
+		return userRepo.getAllUsers();
 	}
 
 }
