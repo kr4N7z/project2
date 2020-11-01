@@ -57,7 +57,7 @@ public class UserController {
 	public void logout(@RequestBody User user, HttpServletRequest req) {
 		userService.logout( req);
 	}
-	
+
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 	public List<User> getFriends(HttpSession session) {
 		UserService us = new UserService();
