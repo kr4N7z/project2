@@ -106,6 +106,9 @@ public class User {
 	public void setLastLogin(Date lastLogin) {
 		this.lastLogin = lastLogin;
 	}
+	public User() {
+		super();
+	}
 	public User(String userType, String email, String password, String firstName, String lastName, float lastLatitude,
 			float lastLongitude, String lastState, Date createdOn, Date lastLogin) {
 		super();

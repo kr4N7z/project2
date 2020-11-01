@@ -44,7 +44,7 @@ public class FriendshipController {
 		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
 		List<Friendship> friends = frimpl.viewMyFriendships((int) session.getAttribute("sender_id"));
 		
-		return friends;
+		return friends; 
 	}
 	
 	@RequestMapping(value = "/viewFriendship", method = RequestMethod.GET)
