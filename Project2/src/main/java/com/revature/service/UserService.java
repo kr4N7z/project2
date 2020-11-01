@@ -15,7 +15,7 @@ public class UserService {
 		this.userRepo = new UserRepositoryImpl();
 	}
 	
-	public List<User> getFriends(User u){
-		return userRepo.getFreinds(u.getUserID());
+	public List<User> getFriends(int userId){
+		return userRepo.getFreinds(userId);
 	}
 }

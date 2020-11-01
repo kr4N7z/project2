@@ -21,14 +21,14 @@ import com.revature.service.UserService;
  * First we need to define a mapping for this controller
  */
 @Controller(value = "userController")
-@RequestMapping(path = "/user")
+@RequestMapping(path = "user")
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 	
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 	public List<User> getFriends(HttpSession session) {
 		UserService us = new UserService();
-		List<User> friends = us.getFriends((User) session.getAttribute("user"));
+		List<User> friends = us.getFriends((int) session.getAttribute("user"));
 		
 		return friends;
 	}
