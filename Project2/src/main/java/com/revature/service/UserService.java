@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -26,8 +27,10 @@ public class UserService {
 		System.out.println("rawpassword = rawpassword?: "+ enc.matches("rawpassword", enc.encode("rawpassword")));
 		User user = userRepo.findOneByEmail(email);
 		if(enc.matches(password, user.getPassword())) {
-			req.getSession();
-			req.setAttribute("userid", user.getUserID());
+			HttpSession session = req.getSession();
+			session.setAttribute("userid", user.getUserID());
+			session.setAttribute("first_name", user.getFirstName());
+			session.setAttribute("last_name", user.getLastName());
 		}
 
 	}

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,7 +15,7 @@ import com.revature.repository.UserRepository;
 import com.revature.repository.UserRepositoryImpl;
 import com.revature.service.UserService;
 
-
+import java.net.http.HttpRequest;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -50,9 +51,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public void login(@RequestBody User user, HttpServletRequest req) {
-		userService.login(user.getEmail(), user.getPassword(), req);
+	public void login(@RequestParam("email") String email , @RequestParam("password") String password, HttpServletRequest req) {
+		userService.login(email, password, req);
 	}
+	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public void logout(@RequestBody User user, HttpServletRequest req) {
 		userService.logout( req);
