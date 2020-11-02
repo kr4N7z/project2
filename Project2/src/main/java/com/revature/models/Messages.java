@@ -13,8 +13,11 @@ import javax.persistence.Id;
 //import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "messages")
+@JsonIgnoreProperties
 public class Messages {
 	@Id
 	@GeneratedValue(generator = "", strategy = GenerationType.AUTO)

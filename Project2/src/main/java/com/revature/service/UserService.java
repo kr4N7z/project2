@@ -20,6 +20,8 @@ public class UserService {
 		userRepo = new UserRepositoryImpl();
 		enc = Encryption.getEncoder();
 	}
+	// Think this needs HTTPSession session = req.getSession(); 
+	// then session.setAttribute() etc.. because right now this is setting the request attribute userId I think.
 	public void login(String email, String password, HttpServletRequest req) {
 		System.out.println("rawpassword = rawpassword?: "+ enc.matches("rawpassword", enc.encode("rawpassword")));
 		User user = userRepo.findOneByEmail(email);
