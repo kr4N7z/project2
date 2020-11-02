@@ -35,8 +35,8 @@ import com.revature.service.UserService;
  * First we need to define a mapping for this controller
  */
 @Controller(value = "userController")
-@RequestMapping(path = "user")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping(path = "/user")
+@JsonIgnoreProperties
 public class UserController {
 	UserService userService;
 
@@ -53,6 +53,11 @@ public class UserController {
 	public void login(@RequestBody User user, HttpServletRequest req) {
 		userService.login(user.getEmail(), user.getPassword(), req);
 	}
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public void logout(@RequestBody User user, HttpServletRequest req) {
+		userService.logout( req);
+	}
+
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 	public List<User> getFriends(HttpSession session) {
 		List<User> friends = userService.getFriends((int) session.getAttribute("user"));
