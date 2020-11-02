@@ -18,11 +18,11 @@ import com.revature.service.MessageService;
 @RequestMapping(path = "/messages")
 public class MessagesController {
 	MessageService messageService;
-
+	
 	public MessagesController() {
 		messageService = new MessageService();
 	}
-	
+		
 	@RequestMapping(value = "/getMyMessages", method = RequestMethod.GET)
 	public List<Messages> getMyMessages(HttpServletRequest req){
 		List<Messages> myMessages;
