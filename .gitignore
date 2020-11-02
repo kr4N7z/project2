@@ -22,3 +22,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /.metadata/
+Project2/target/classes/com/revature/utility/META-INF/MANIFEST.MF
+Project2/target/classes/com/revature/utility/META-INF/maven/com.revature/Project2/pom.properties
+Project2/target/classes/com/revature/utility/META-INF/maven/com.revature/Project2/pom.xml
+Project2/target/m2e-wtp/web-resources/META-INF/maven/com.revature/Project2/pom.properties

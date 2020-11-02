@@ -8,11 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.Friendship;
 import com.revature.repository.FriendshipRepositoryImpl;
 
-@Controller(value = "friendshipController")
+@RestController(value = "friendshipController")
 @RequestMapping(path = "/friendship")
 public class FriendshipController {
 	
@@ -44,7 +45,7 @@ public class FriendshipController {
 		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
 		List<Friendship> friends = frimpl.viewMyFriendships((int) session.getAttribute("sender_id"));
 		
-		return friends;
+		return friends; 
 	}
 	
 	@RequestMapping(value = "/viewFriendship", method = RequestMethod.GET)
