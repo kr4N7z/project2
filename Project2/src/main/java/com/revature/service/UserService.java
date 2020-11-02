@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.revature.models.GeoIp;
 import com.revature.models.User;
@@ -21,7 +22,7 @@ import com.revature.utility.Encryption;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
-
+@Service
 public class UserService {
 	UserRepository userRepo;
 	PasswordEncoder enc;
@@ -45,6 +46,7 @@ public class UserService {
 				user.setLastState(location.getState());
 				user.setLatitude(Float.valueOf(location.getLatitude()));
 				user.setLongitude(Float.valueOf(location.getLongitude()));
+				
 			} catch (UnknownHostException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

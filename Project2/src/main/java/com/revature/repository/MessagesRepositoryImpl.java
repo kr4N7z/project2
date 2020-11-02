@@ -15,8 +15,9 @@ import javax.persistence.criteria.Predicate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public class MessagesRepositoryImpl implements MessagesRepository{
 
 	@Override

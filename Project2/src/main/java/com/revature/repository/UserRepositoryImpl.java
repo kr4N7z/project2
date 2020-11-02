@@ -12,11 +12,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import com.revature.models.Friendship;
 import com.revature.models.User;
 import com.revature.utility.HibernateSessionFactory;
-
+@Repository
 public class UserRepositoryImpl implements UserRepository {
 
 	@Override
@@ -81,6 +82,24 @@ public class UserRepositoryImpl implements UserRepository {
 
 
 		return friends;
+	}
+
+	@Override
+	public void updateLocation(int userId, float latitude, float longitude, String state) {
+		Session s = null;
+		Transaction tx = null;
+
+		try {
+			s = HibernateSessionFactory.getSession();
+			tx = s.beginTransaction();
+			
+			tx.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			s.close();
+		}
+				
 	}
 
 }
