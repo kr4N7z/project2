@@ -15,4 +15,6 @@ public interface UserRepository {
 	List<User> getFreinds(int senderID);
 	
 	void updateLocation(int userId, float latitude, float longitude, String state);
+	
+	User findOneByUserId(int userId); 
 }

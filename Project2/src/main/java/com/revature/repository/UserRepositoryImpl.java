@@ -102,4 +102,32 @@ public class UserRepositoryImpl implements UserRepository {
 				
 	}
 
+	@Override
+	public User findOneByUserId(int userId) {
+		Session s = null;
+		Transaction tx = null;
+		User friend = null;
+		
+		try {
+			s = HibernateSessionFactory.getSession();
+			tx = s.beginTransaction();
+			CriteriaBuilder cb = s.getCriteriaBuilder();
+			CriteriaQuery<User> cq = cb.createQuery(User.class);
+			Root<User> root = cq.from(User.class);
+			cq.select(root).where(cb.equal(root.get("user_id"), userId));
+			Query<User> q = s.createQuery(cq);
+			
+			friend = q.getSingleResult();
+			tx.commit();
+		}catch(HibernateException e) {
+			e.printStackTrace();
+			tx.rollback();
+		}finally {
+			s.close();
+		}
+		
+		
+		return friend;
+	}
+
 }

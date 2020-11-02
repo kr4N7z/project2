@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Transaction;
@@ -13,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import com.revature.models.Friendship;
 import com.revature.models.User;
+import com.revature.repository.UserRepositoryImpl;
 import com.revature.utility.HibernateSessionFactory;
 
 public class FriendshipRepositoryImpl implements FriendshipRepository {
@@ -156,8 +158,40 @@ public class FriendshipRepositoryImpl implements FriendshipRepository {
 
 	@Override
 	public List<User> getMyUnapproved(int currUserId) {
-		// TODO Auto-generated method stub
-		return null;
+		Session s = null;
+		Transaction tx = null; 
+		List<Friendship> friendships = new ArrayList<>();
+		
+		try {
+			s = HibernateSessionFactory.getSession();
+			tx = s.beginTransaction();
+			CriteriaBuilder cb = s.getCriteriaBuilder();
+			CriteriaQuery<Friendship> cq = cb.createQuery(Friendship.class);
+			Root<Friendship> root = cq.from(Friendship.class);
+			
+			Predicate whereReceiver = cb.equal(root.get("receiver_id"), currUserId);
+			Predicate whereApproved = cb.equal(root.get("approved"), false);
+			
+			Predicate finalQuery = cb.and(whereReceiver, whereApproved);
+			cq.where(finalQuery);
+			Query q = s.createQuery(cq);
+			
+			friendships = q.getResultList();
+			tx.commit();
+		}catch(HibernateException e) {
+			e.printStackTrace();
+			tx.rollback();
+		}finally {
+			s.close();
+		}
+		
+		List<User> friends = new ArrayList<>();
+		UserRepositoryImpl urimpl = new UserRepositoryImpl();
+		for(Friendship friend : friendships) {
+			friends.add(urimpl.findOneByUserId(friend.getSenderId()));
+		}
+		
+		return friends;
 	}
 
 }
