@@ -1,34 +1,50 @@
 package com.revature.service;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 import org.springframework.stereotype.Service;
 
-import com.maxmind.geoip2.DatabaseReader;
-import com.maxmind.geoip2.exception.GeoIp2Exception;
-import com.maxmind.geoip2.model.CityResponse;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.revature.models.GeoIp;
+
 @Service
 public class GeoIpService {
 	public GeoIp getLocation(InetAddress ipAddress) {
-		
+
 		GeoIp location = new GeoIp();
-		String state = null;
-		File database = new File("/Project2/src/main/resources/GeoLite2-City.mmdb");
-		CityResponse response;
+		URL ipapi;
+
+		URLConnection connection;
 		try {
-			DatabaseReader dbReader = new DatabaseReader.Builder(database).build();
-			response = dbReader.city(ipAddress);
-			location.setCity(response.getCity().getName());
-			location.setLatitude(response.getLocation().getLatitude().toString());
-			location.setLongitude(response.getLocation().getLongitude().toString());
-		} catch (IOException | GeoIp2Exception e) {
+			ipapi = new URL("https://ipapi.co/" + ipAddress.toString() + "/json/");
+			connection = ipapi.openConnection();
+			connection.setRequestProperty("User-Agent", "java-ipapi-client");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			JsonObject geoLocation = new JsonParser().parse(reader).getAsJsonObject();
+			JsonArray locationArray = geoLocation.getAsJsonArray();
+			for (int i = 0; i < locationArray.size(); i++) {
+				location.setCity(locationArray.get(i).getAsJsonObject().get("city").getAsString());
+				location.setState(locationArray.get(i).getAsJsonObject().get("region").getAsString());
+				location.setLatitude(locationArray.get(i).getAsJsonObject().get("latitude").getAsString());
+				location.setLongitude(locationArray.get(i).getAsJsonObject().get("longitude").getAsString());
+			}
+		} catch (MalformedURLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return location;	
+
+		return location;
 	}
 }

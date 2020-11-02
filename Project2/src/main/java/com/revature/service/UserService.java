@@ -19,9 +19,7 @@ import com.revature.models.User;
 import com.revature.repository.UserRepository;
 import com.revature.repository.UserRepositoryImpl;
 import com.revature.utility.Encryption;
-import com.maxmind.geoip2.DatabaseReader;
-import com.maxmind.geoip2.exception.GeoIp2Exception;
-import com.maxmind.geoip2.model.CityResponse;
+
 @Service
 public class UserService {
 	UserRepository userRepo;
