@@ -12,6 +12,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import com.revature.models.Friendship;
+import com.revature.models.User;
 import com.revature.utility.HibernateSessionFactory;
 
 public class FriendshipRepositoryImpl implements FriendshipRepository {
@@ -151,6 +152,12 @@ public class FriendshipRepositoryImpl implements FriendshipRepository {
 		}finally {
 			s.close();
 		}
+	}
+
+	@Override
+	public List<User> getMyUnapproved(int currUserId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
