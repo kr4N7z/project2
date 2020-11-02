@@ -15,7 +15,6 @@ import com.revature.repository.UserRepository;
 import com.revature.repository.UserRepositoryImpl;
 import com.revature.service.UserService;
 
-import java.net.http.HttpRequest;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
