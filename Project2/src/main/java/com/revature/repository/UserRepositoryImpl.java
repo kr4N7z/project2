@@ -46,6 +46,8 @@ public class UserRepositoryImpl implements UserRepository {
 
 		try {
 			s = HibernateSessionFactory.getSession();
+			tx = s.beginTransaction();
+			
 			CriteriaBuilder cb = s.getCriteriaBuilder();
 			CriteriaQuery<User> cq = cb.createQuery(User.class);
 			Root<User> root = cq.from(User.class);

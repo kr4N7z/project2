@@ -1,29 +1,17 @@
 package com.revature.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
-import org.springframework.stereotype.Controller;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.revature.models.User;
-import com.revature.repository.UserRepository;
-import com.revature.repository.UserRepositoryImpl;
-import com.revature.service.UserService;
-
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
+import com.google.gson.Gson;
 import com.revature.models.User;
 import com.revature.service.UserService;
 
@@ -50,21 +38,38 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public void login(@RequestParam("email") String email , @RequestParam("password") String password, HttpServletRequest req) {
-		userService.login(email, password, req);
+	public void login(@RequestBody String body, HttpServletRequest req) {
+		Gson gson = new Gson();
+		User user = gson.fromJson(body, User.class);
+		
+		//return "user email "+ user.getEmail() + " user password " + user.getPassword();
+		userService.login(user.getEmail(), user.getPassword(), req);
 	}
 	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public void logout(@RequestBody User user, HttpServletRequest req) {
+	public void logout( HttpServletRequest req) {
 		userService.logout( req);
 	}
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 	public List<User> getFriends(HttpSession session) {
 		UserService us = new UserService();
-
 		List<User> friends = us.getFriends((User) session.getAttribute("user"));
 
 		return friends;
+	}
+	
+	@RequestMapping(value = "/testget", method = RequestMethod.GET)
+	public String testget(@RequestParam("test") String test) {
+
+
+		return test;
+	}
+	
+	//requestparam: localhost:8080/user/whatever?user=10
+	@RequestMapping(value = "/testPost", method = RequestMethod.POST)
+	public String testPost(HttpSession session) {
+		
+		return (String) session.getAttribute("userid");
 	}
 }
