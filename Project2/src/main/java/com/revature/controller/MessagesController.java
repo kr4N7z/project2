@@ -9,11 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.Messages;
 import com.revature.service.MessageService;
 
-@Controller(value = "messagesController")
+@RestController(value = "messagesController")
 @RequestMapping(path = "/messages")
 public class MessagesController {
 	MessageService messageService;

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.revature.models.User;
@@ -34,9 +35,8 @@ import com.revature.service.UserService;
  *
  * First we need to define a mapping for this controller
  */
-@Controller(value = "userController")
+@RestController(value = "userController")
 @RequestMapping(path = "/user")
-@JsonIgnoreProperties
 public class UserController {
 	UserService userService;
 
