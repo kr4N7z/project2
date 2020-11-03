@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.HibernateException;
@@ -14,6 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.revature.models.Friendship;
+import com.revature.models.Messages;
 import com.revature.models.User;
 import com.revature.utility.HibernateSessionFactory;
 
@@ -66,11 +69,22 @@ public class UserRepositoryImpl implements UserRepository {
 		try {
 			s = HibernateSessionFactory.getSession();
 			tx = s.beginTransaction();
-			Query query = s.createQuery("from Friendship f join f.receiverId where Friendship.senderId = :senderId");
-			query.setParameter("senderId", senderId);
-			friends = query.getResultList();
-
+			CriteriaBuilder builder = s.getCriteriaBuilder();
+			CriteriaQuery<User> criteria = builder.createQuery(User.class);
+			Root<User> rootUser = criteria.from(User.class);
+			Root<Friendship> rootFriendship = criteria.from(Friendship.class);
+			criteria.select(rootUser);
+			Predicate statusTrue = builder.equal(rootFriendship.get("status"), true);
+			
+			Predicate whereSender = builder.equal(rootFriendship.get("senderId"), senderId);
+			
+			Predicate whereUserId = builder.equal(rootUser.get("userID"),rootFriendship.get("receiverId"));
+			
+			Predicate finalQuery = builder.and(statusTrue, whereSender, whereUserId);
+			criteria.where(finalQuery);
+			List<User> users = s.createQuery(criteria).getResultList();
 			tx.commit();
+			return users;
 		}catch(HibernateException e) {
 			e.printStackTrace();
 			tx.rollback();
@@ -88,7 +102,7 @@ public class UserRepositoryImpl implements UserRepository {
 			s = HibernateSessionFactory.getSession();
 			tx = s.beginTransaction();
 			
-			users = s.createQuery("FROM users", User.class).getResultList();
+			users = s.createQuery("FROM User", User.class).getResultList();
 			tx.commit();
 		}catch(HibernateException e) {
 			e.printStackTrace();
