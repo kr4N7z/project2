@@ -57,9 +57,7 @@ public class UserController {
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 	public List<User> getFriends(HttpSession session) {
-//		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
-//		List<User> friends = userService.getFriends(userId);
-		List<User> friends = userService.getFriends(Integer.valueOf(session.getAttribute("user_id").toString()));
+		List<User> friends = userService.getFriends(Integer.valueOf(session.getAttribute("userID").toString()));
 		return friends;
 	}
 	@RequestMapping(value = "/allusers", method = RequestMethod.GET)
