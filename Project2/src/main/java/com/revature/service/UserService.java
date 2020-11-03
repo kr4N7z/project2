@@ -40,7 +40,9 @@ public class UserService {
 		if (enc.matches(password, user.getPassword())) {
 			System.out.println("got a match trying to create a session");
 			try {
-				InetAddress ipAddress = InetAddress.getByName(req.getRemoteAddr().toString());
+				//String remoteAddress = req.getRemoteAddr();
+				String remoteAddress = req.getLocalAddr();
+				InetAddress ipAddress = InetAddress.getByName(remoteAddress);
 				GeoIpService geoIpService = new GeoIpService();
 				GeoIp location = geoIpService.getLocation(ipAddress);
 				user.setLastState(location.getState());
