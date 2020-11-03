@@ -15,8 +15,9 @@ import javax.persistence.criteria.Predicate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public class MessagesRepositoryImpl implements MessagesRepository{
 
 	@Override
@@ -36,10 +37,11 @@ public class MessagesRepositoryImpl implements MessagesRepository{
 			Predicate whereReceiver = cb.equal(root.get("receiver_id"), myId);
 			
 			Predicate finalQuery = cb.or(whereSender,whereReceiver);
+			
 			cq.where(finalQuery);
 			
 			Query q = s.createQuery(cq);
-
+			
 			messages = q.getResultList();
 			tx.commit();
 		}catch(Exception e) {

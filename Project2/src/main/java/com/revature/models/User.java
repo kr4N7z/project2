@@ -11,8 +11,11 @@ import javax.persistence.Table;
 
 import org.postgresql.geometric.PGpoint;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties
 public class User {
 	@Id
 	@GeneratedValue(generator = "users_user_id_seq", strategy = GenerationType.AUTO)
@@ -122,6 +125,13 @@ public class User {
 		this.lastState = lastState;
 		this.createdOn = createdOn;
 		this.lastLogin = lastLogin;
+	}
+	@Override
+	public String toString() {
+		return "User [userID=" + userID + ", userType=" + userType + ", email=" + email + ", password=" + password
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", lastLatitude=" + lastLatitude
+				+ ", lastLongitude=" + lastLongitude + ", lastState=" + lastState + ", createdOn=" + createdOn
+				+ ", lastLogin=" + lastLogin + "]";
 	}
 	
 	

@@ -3,10 +3,12 @@ package com.revature.service;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.revature.models.Messages;
 import com.revature.repository.MessagesRepository;
 import com.revature.repository.MessagesRepositoryImpl;
-
+@Service
 public class MessageService {
 	MessagesRepository messagesRepository;
 	public MessageService() {

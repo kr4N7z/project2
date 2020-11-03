@@ -1,29 +1,17 @@
 package com.revature.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
-import org.springframework.stereotype.Controller;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.revature.models.User;
-import com.revature.repository.UserRepository;
-import com.revature.repository.UserRepositoryImpl;
-import com.revature.service.UserService;
-
-
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
+import com.google.gson.Gson;
 import com.revature.models.User;
 import com.revature.service.UserService;
 
@@ -50,11 +38,16 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public void login(@RequestBody User user, HttpServletRequest req) {
+	public void login(@RequestBody String body, HttpServletRequest req) {
+		Gson gson = new Gson();
+		User user = gson.fromJson(body, User.class);
+		
+		//return "user email "+ user.getEmail() + " user password " + user.getPassword();
 		userService.login(user.getEmail(), user.getPassword(), req);
 	}
+	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public void logout(@RequestBody User user, HttpServletRequest req) {
+	public void logout( HttpServletRequest req) {
 		userService.logout( req);
 	}
 
