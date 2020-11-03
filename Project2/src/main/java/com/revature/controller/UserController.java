@@ -27,7 +27,8 @@ import com.revature.service.UserService;
  */
 @RestController(value = "userController")
 @RequestMapping(path = "/user")
-@CrossOrigin(origins="http://localhost:4200")
+//@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins = "http://wheretheboysat.s3-website-us-east-1.amazonaws.com")
 public class UserController {
 	UserService userService;
 

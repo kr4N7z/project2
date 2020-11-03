@@ -39,21 +39,21 @@ public class UserService {
 		User user = userRepo.findOneByEmail(email);
 		if (enc.matches(password, user.getPassword())) {
 			System.out.println("got a match trying to create a session");
-			try {
-				String remoteAddress = req.getRemoteAddr();
+			//try {
+				//String remoteAddress = req.getRemoteAddr();
 				//String remoteAddress = req.getLocalAddr();
-				InetAddress ipAddress = InetAddress.getByName(remoteAddress);
-				GeoIpService geoIpService = new GeoIpService();
-				GeoIp location = geoIpService.getLocation(ipAddress);
-				user.setLastState(location.getState());
-				user.setLatitude(Float.valueOf(location.getLatitude()));
-				user.setLongitude(Float.valueOf(location.getLongitude()));
+				//InetAddress ipAddress = InetAddress.getByName(remoteAddress);
+				//GeoIpService geoIpService = new GeoIpService();
+				//GeoIp location = geoIpService.getLocation(ipAddress);
+				//user.setLastState(location.getState());
+				//user.setLatitude(Float.valueOf(location.getLatitude()));
+				//user.setLongitude(Float.valueOf(location.getLongitude()));
 
-			} catch (UnknownHostException e) {
+			//} catch (UnknownHostException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			//	e.printStackTrace();
+			//}
+//
 			HttpSession session = req.getSession();
 			session.setAttribute("user_id", user.getUserID());
 			session.setAttribute("first_name", user.getFirstName());
