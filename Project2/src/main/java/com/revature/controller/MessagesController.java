@@ -18,15 +18,14 @@ import com.revature.service.MessageService;
 @RequestMapping(path = "/messages")
 public class MessagesController {
 	MessageService messageService;
-
+	
 	public MessagesController() {
 		messageService = new MessageService();
 	}
-	
+		
 	@RequestMapping(value = "/getMyMessages", method = RequestMethod.GET)
-	public List<Messages> getMyMessages(HttpServletRequest req){
+	public List<Messages> getMyMessages(HttpSession session){
 		List<Messages> myMessages;
-		HttpSession session= req.getSession(false);
 		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
 		myMessages = messageService.getMyMessages(userId);
 		return myMessages;
@@ -34,8 +33,7 @@ public class MessagesController {
 	
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
 	public void sendMessage(@RequestParam("message") String message, @RequestParam("received_id") int receivedId,
-			HttpServletRequest req) {
-		HttpSession session = req.getSession(false);
+			HttpSession session) {
 		int senderId = Integer.valueOf(session.getAttribute("user_id").toString());
 		messageService.sendMessage(senderId, receivedId, message);
 	}

@@ -1,41 +1,73 @@
 package com.revature.service;
 
-
+import java.io.File;
+import java.io.IOException;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+import com.revature.models.GeoIp;
 import com.revature.models.User;
 import com.revature.repository.UserRepository;
 import com.revature.repository.UserRepositoryImpl;
 import com.revature.utility.Encryption;
 
+@Service
 public class UserService {
 	UserRepository userRepo;
 	PasswordEncoder enc;
-	public UserService(){
+	
+	public UserService() {
 		userRepo = new UserRepositoryImpl();
 		enc = Encryption.getEncoder();
 	}
-	// Think this needs HTTPSession session = req.getSession(); 
-	// then session.setAttribute() etc.. because right now this is setting the request attribute userId I think.
+
+	// Think this needs HTTPSession session = req.getSession();
+	// then session.setAttribute() etc.. because right now this is setting the
+	// request attribute userId I think.
 	public void login(String email, String password, HttpServletRequest req) {
-		System.out.println("rawpassword = rawpassword?: "+ enc.matches("rawpassword", enc.encode("rawpassword")));
+		System.out.println("rawpassword = rawpassword?: " + enc.matches("rawpassword", enc.encode("rawpassword")));
 		User user = userRepo.findOneByEmail(email);
-		if(enc.matches(password, user.getPassword())) {
-			req.getSession();
-			req.setAttribute("userid", user.getUserID());
+		if (enc.matches(password, user.getPassword())) {
+			try {
+				String address = req.getRemoteAddr().toString();
+				InetAddress ipAddress = InetAddress.getByName(req.getRemoteAddr().toString());
+				GeoIpService geoIpService = new GeoIpService();
+				GeoIp location  = geoIpService.getLocation(ipAddress);
+				String stateString = location.getState().replaceAll("^\"|\"$", "");
+				user.setLastState(stateString);
+				user.setLatitude(Float.valueOf(location.getLatitude()));
+				user.setLongitude(Float.valueOf(location.getLongitude()));
+				userRepo.updateLocation(user.getUserID(), user.getLastLatitude(), user.getLastLatitude(), user.getLastState());
+				
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			HttpSession session = req.getSession();
+			session.setAttribute("user_id", user.getUserID());
+			session.setAttribute("first_name", user.getFirstName());
+			session.setAttribute("last_name", user.getLastName());
 		}
 
 	}
+
 	public void logout(HttpServletRequest req) {
 		req.getSession().invalidate();
 	}
+
 	public void register(User user) {
-		User newUser = new User("user",user.getEmail(),user.getPassword(),user.getFirstName(),user.getLastName(),0f,0f,"",new Date(0),new Date(0));
+		User newUser = new User("user", user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(),
+				0f, 0f, "", new Date(0), new Date(0));
 		userRepo.insert(newUser);
 	}
 	public List<User> getFriends(int userId){
