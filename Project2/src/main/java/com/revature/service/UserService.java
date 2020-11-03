@@ -39,18 +39,18 @@ public class UserService {
 		User user = userRepo.findOneByEmail(email);
 		if (enc.matches(password, user.getPassword())) {
 			System.out.println("got a match trying to create a session");
-//			try {
-//				InetAddress ipAddress = InetAddress.getByName(req.getRemoteAddr().toString());
-//				GeoIpService geoIpService = new GeoIpService();
-//				GeoIp location  = geoIpService.getLocation(ipAddress);
-//				user.setLastState(location.getState());
-//				user.setLatitude(Float.valueOf(location.getLatitude()));
-//				user.setLongitude(Float.valueOf(location.getLongitude()));
-//
-//			} catch (UnknownHostException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			try {
+				InetAddress ipAddress = InetAddress.getByName(req.getRemoteAddr().toString());
+				GeoIpService geoIpService = new GeoIpService();
+				GeoIp location = geoIpService.getLocation(ipAddress);
+				user.setLastState(location.getState());
+				user.setLatitude(Float.valueOf(location.getLatitude()));
+				user.setLongitude(Float.valueOf(location.getLongitude()));
+
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			HttpSession session = req.getSession();
 			session.setAttribute("user_id", user.getUserID());
@@ -71,11 +71,13 @@ public class UserService {
 				0f, 0f, "", new Date(0), new Date(0));
 		userRepo.insert(newUser);
 	}
-	public List<User> getFriends(int userId){
+
+	public List<User> getFriends(int userId) {
 		return userRepo.getFreinds(userId);
 
 	}
-	public List<User> getAllUsers(){
+
+	public List<User> getAllUsers() {
 		return userRepo.getAllUsers();
 	}
 
