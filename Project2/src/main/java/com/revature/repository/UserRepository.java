@@ -13,6 +13,7 @@ public interface UserRepository {
 	User findOneByEmail(String email);
 
 	List<User> getFreinds(int senderID);
+	List<User> getAllUsers();
 	
 	void updateLocation(int userId, float latitude, float longitude, String state);
 }

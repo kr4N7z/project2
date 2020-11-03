@@ -11,9 +11,11 @@ import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
+
 import com.revature.models.Friendship;
 import com.revature.utility.HibernateSessionFactory;
-
+@Repository
 public class FriendshipRepositoryImpl implements FriendshipRepository {
 
 	@Override

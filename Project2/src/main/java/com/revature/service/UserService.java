@@ -46,7 +46,7 @@ public class UserService {
 //				user.setLastState(location.getState());
 //				user.setLatitude(Float.valueOf(location.getLatitude()));
 //				user.setLongitude(Float.valueOf(location.getLongitude()));
-//				
+//
 //			} catch (UnknownHostException e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
@@ -58,7 +58,7 @@ public class UserService {
 			session.setAttribute("last_name", user.getLastName());
 			return user;
 		}
-		
+
 		return user;
 	}
 
@@ -71,10 +71,12 @@ public class UserService {
 				0f, 0f, "", new Date(0), new Date(0));
 		userRepo.insert(newUser);
 	}
+	public List<User> getFriends(int userId){
+		return userRepo.getFreinds(userId);
 
-	public List<User> getFriends(User u) {
-		return userRepo.getFreinds(u.getUserID());
-
+	}
+	public List<User> getAllUsers(){
+		return userRepo.getAllUsers();
 	}
 
 }

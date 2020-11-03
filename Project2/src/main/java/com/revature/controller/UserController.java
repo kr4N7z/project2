@@ -44,11 +44,11 @@ public class UserController {
 	public User login(@RequestBody String body, HttpServletRequest req) {
 		Gson gson = new Gson();
 		User user = gson.fromJson(body, User.class);
-		
+
 		//return "user email "+ user.getEmail() + " user password " + user.getPassword();
 		return userService.login(user.getEmail(), user.getPassword(), req);
 	}
-	
+
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public void logout( HttpServletRequest req) {
 		userService.logout( req);
@@ -56,27 +56,14 @@ public class UserController {
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 	public List<User> getFriends(HttpSession session) {
-		UserService us = new UserService();
-		List<User> friends = us.getFriends((User) session.getAttribute("user"));
-
+//		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
+//		List<User> friends = userService.getFriends(userId);
+		List<User> friends = userService.getFriends(Integer.valueOf(session.getAttribute("user_id").toString()));
 		return friends;
 	}
-	
-	@RequestMapping(value = "/testget", method = RequestMethod.GET)
-	public String testget(@RequestParam("test") String test) {
-
-
-		return test;
-	}
-	
-	//requestparam: localhost:8080/user/whatever?user=10
-	@RequestMapping(value = "/testPost", method = RequestMethod.POST)
-	public String testPost(HttpSession session) {
-		System.out.println(session.getAttributeNames());
-		Iterator<String> iterator = session.getAttributeNames().asIterator();
-		while(iterator.hasNext()) {
-			System.out.println(iterator.next());
-		}
-		return "the user id is: " + (int) session.getAttribute("user_id");
+	@RequestMapping(value = "/allusers", method = RequestMethod.GET)
+	public List<User> getAllUsers(HttpSession session) {
+		List<User> users = userService.getAllUsers();
+		return users;
 	}
 }
