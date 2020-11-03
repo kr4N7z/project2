@@ -27,11 +27,10 @@ public class GeoIpService {
 		HttpURLConnection connection;
 		try {
 			ipapi = new URL(
-					"http://api.ipapi.com/2601:484:4201:3390:6c04:2732:76b:9d31?access_key=74686d18f1d0d99ae28f8a2643e65f22");
+					"http://api.ipapi.com/" + ipAddress.toString() + "?access_key=74686d18f1d0d99ae28f8a2643e65f22");
 			connection = (HttpURLConnection) ipapi.openConnection();
 			connection.setRequestMethod("GET");
-			// connection.setRequestProperty("access_key",
-			// "74686d18f1d0d99ae28f8a2643e65f22");
+			
 			connection.setRequestProperty("Content-Type", "application/json");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
