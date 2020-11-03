@@ -24,7 +24,7 @@ import com.revature.utility.Encryption;
 public class UserService {
 	UserRepository userRepo;
 	PasswordEncoder enc;
-
+	
 	public UserService() {
 		userRepo = new UserRepositoryImpl();
 		enc = Encryption.getEncoder();
@@ -38,12 +38,15 @@ public class UserService {
 		User user = userRepo.findOneByEmail(email);
 		if (enc.matches(password, user.getPassword())) {
 			try {
+				String address = req.getRemoteAddr().toString();
 				InetAddress ipAddress = InetAddress.getByName(req.getRemoteAddr().toString());
 				GeoIpService geoIpService = new GeoIpService();
 				GeoIp location  = geoIpService.getLocation(ipAddress);
-				user.setLastState(location.getState());
+				String stateString = location.getState().replaceAll("^\"|\"$", "");
+				user.setLastState(stateString);
 				user.setLatitude(Float.valueOf(location.getLatitude()));
 				user.setLongitude(Float.valueOf(location.getLongitude()));
+				userRepo.updateLocation(user.getUserID(), user.getLastLatitude(), user.getLastLatitude(), user.getLastState());
 				
 			} catch (UnknownHostException e) {
 				// TODO Auto-generated catch block

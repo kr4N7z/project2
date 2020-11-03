@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -56,14 +57,17 @@ public class UserRepositoryImpl implements UserRepository {
 			Root<User> root = cq.from(User.class);
 			cq.select(root).where(cb.equal(root.get("email"), email));
 			Query<User> q = s.createQuery(cq);
-
+		
 			user = q.getSingleResult();
 			tx.commit();
 		}catch(Exception e) {
 			e.printStackTrace();
+		}finally {
+			s.close();
 		}
 		return user;
 	}
+	@Override
 	public List<User> getFreinds(int senderId) {
 		Session s = null;
 		Transaction tx = null;
@@ -101,13 +105,11 @@ public class UserRepositoryImpl implements UserRepository {
 			CriteriaUpdate<User> cu = cb.createCriteriaUpdate(User.class);
 			Root<User> root = cu.from(User.class);
 			
-			Predicate whereUser = cb.equal(root.get("user_id"), userId);
-			
-			
-			cu.set("last_state", state);
-			cu.set("last_latitude", latitude);
-			cu.set("last_longitude", longitude);
-
+			Path<Object> stateRoot = root.get("email");
+			cu.set(root.get("lastState"), state);
+			cu.set(root.get("lastLatitude"), latitude);
+			cu.set(root.get("lastLongitude"), longitude);
+			Predicate whereUser = cb.equal(root.get("userID"), userId);
 			cu.where(whereUser);
 			
 			s.createQuery(cu).executeUpdate();
