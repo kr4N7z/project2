@@ -113,4 +113,9 @@ public class UserController {
 	public User userAttributes() {
 		return new User();
 	}
+	
+	@RequestMapping(value = "/userByEmail", method = RequestMethod.GET)
+	public User getUserByEmail(@RequestParam("email") String email) {
+		return userService.getUserByEmail(email);
+	}
 }

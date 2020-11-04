@@ -91,5 +91,9 @@ public class UserService {
 	public List<User> getAllUsers() {
 		return userRepo.getAllUsers();
 	}
+	
+	public User getUserByEmail(String email) {
+		return userRepo.findOneByEmail(email);
+	}
 
 }
