@@ -63,10 +63,10 @@ public class UserService {
 			req.getSession().setAttribute("user_id", user.getUserID());
 			req.getSession().setAttribute("first_name", user.getFirstName());
 			req.getSession().setAttribute("last_name", user.getLastName());
-			String valueString =gson.toJson(user);
-			Cookie createSession = new Cookie(req.getSession().getId(), valueString);
-			createSession.setPath(req.getContextPath());
-			response.addCookie(createSession);
+			//String valueString =gson.toJson(user);
+			//Cookie createSession = new Cookie(req.getSession().getId(), valueString);
+			//createSession.setPath(req.getContextPath());
+			//response.addCookie(createSession);
 			return user;
 		}
 
@@ -91,9 +91,10 @@ public class UserService {
 	public List<User> getAllUsers() {
 		return userRepo.getAllUsers();
 	}
-	
+
 	public User getUserByEmail(String email) {
-		return userRepo.findOneByEmail(email);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
