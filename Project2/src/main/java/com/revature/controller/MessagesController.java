@@ -20,7 +20,7 @@ import com.revature.service.MessageService;
 
 @RestController(value = "messagesController")
 @RequestMapping(path = "/messages")
-@CrossOrigin(origins = "http://wheretheboysat.s3-website-us-east-1.amazonaws.com")
+@CrossOrigin
 @SessionAttributes("currentUser")
 public class MessagesController {
 	MessageService messageService;

@@ -19,7 +19,7 @@ import com.revature.repository.FriendshipRepositoryImpl;
 
 @RestController(value = "friendshipController")
 @RequestMapping(path = "/friendship")
-@CrossOrigin(origins = "http://wheretheboysat.s3-website-us-east-1.amazonaws.com")
+@CrossOrigin
 @SessionAttributes("currentUser")
 
 public class FriendshipController {
