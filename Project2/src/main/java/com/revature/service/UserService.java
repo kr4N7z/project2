@@ -93,8 +93,6 @@ public class UserService {
 	}
 
 	public User getUserByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+        return userRepo.findOneByEmail(email);
+    }
 }
