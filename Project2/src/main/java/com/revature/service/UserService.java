@@ -34,11 +34,8 @@ public class UserService {
 	// then session.setAttribute() etc.. because right now this is setting the
 	// request attribute userId I think.
 	public User login(String email, String password, HttpServletRequest req) {
-		System.out.println("rawpassword = rawpassword?: " + enc.matches("rawpassword", enc.encode("rawpassword")));
-		System.out.println(enc.encode("secret"));
 		User user = userRepo.findOneByEmail(email);
 		if (enc.matches(password, user.getPassword())) {
-			System.out.println("got a match trying to create a session");
 			//try {
 				//String remoteAddress = req.getRemoteAddr();
 				//String remoteAddress = req.getLocalAddr();
@@ -58,6 +55,7 @@ public class UserService {
 			session.setAttribute("user_id", user.getUserID());
 			session.setAttribute("first_name", user.getFirstName());
 			session.setAttribute("last_name", user.getLastName());
+			System.out.println(session.getId());
 			return user;
 		}
 

@@ -27,8 +27,8 @@ import com.revature.service.UserService;
  */
 @RestController(value = "userController")
 @RequestMapping(path = "/user")
-//@CrossOrigin(origins="http://localhost:4200")
-@CrossOrigin(origins = "http://wheretheboysat.s3-website-us-east-1.amazonaws.com")
+@CrossOrigin(origins="http://localhost:4200")
+//@CrossOrigin(origins = "http://wheretheboysat.s3-website-us-east-1.amazonaws.com")
 public class UserController {
 	UserService userService;
 
@@ -48,6 +48,7 @@ public class UserController {
 
 		//return "user email "+ user.getEmail() + " user password " + user.getPassword();
 		return userService.login(user.getEmail(), user.getPassword(), req);
+		
 	}
 
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
@@ -56,12 +57,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
-	public List<User> getFriends(HttpSession session) {
-		List<User> friends = userService.getFriends(Integer.valueOf(session.getAttribute("userID").toString()));
+	public List<User> getFriends(HttpSession session) {	
+		System.out.println(session.getId());
+		List<User> friends = userService.getFriends(Integer.valueOf(session.getAttribute("user_id").toString()));
+//		List<User> friends = userService.getFriends(1);
 		return friends;
 	}
 	@RequestMapping(value = "/allusers", method = RequestMethod.GET)
-	public List<User> getAllUsers(HttpSession session) {
+	public List<User> getAllUsers() {
 		List<User> users = userService.getAllUsers();
 		return users;
 	}
