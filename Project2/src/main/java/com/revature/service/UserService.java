@@ -18,6 +18,7 @@ import com.revature.models.GeoIp;
 import com.revature.models.User;
 import com.revature.repository.UserRepository;
 import com.revature.repository.UserRepositoryImpl;
+import com.revature.utility.BasicResponseWrapper;
 import com.revature.utility.Encryption;
 
 @Service
@@ -52,24 +53,31 @@ public class UserService {
 //				e.printStackTrace();
 //			}
 
-			HttpSession session = req.getSession();
-			session.setAttribute("user_id", user.getUserID());
-			session.setAttribute("first_name", user.getFirstName());
-			session.setAttribute("last_name", user.getLastName());
+			//HttpSession session = req.getSession().setAttribute(name, value);
+			req.getSession().setAttribute("user_id", user.getUserID());
+			req.getSession(false).setAttribute("first_name", user.getFirstName());
+			req.getSession(false).setAttribute("last_name", user.getLastName());
 			return user;
 		}
 
 		return user;
 	}
 
-	public void logout(HttpServletRequest req) {
+	public BasicResponseWrapper logout(HttpServletRequest req) {
+		
 		req.getSession().invalidate();
+		BasicResponseWrapper brw = new BasicResponseWrapper();
+		brw.setSuccess(true);
+		return brw;
 	}
 
-	public void register(User user) {
-		User newUser = new User("user", user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(),
+	public BasicResponseWrapper register(User user) {
+		User newUser = new User("user", user.getEmail(), enc.encode(user.getPassword()), user.getFirstName(), user.getLastName(),
 				0f, 0f, "", new Date(0), new Date(0));
 		userRepo.insert(newUser);
+		BasicResponseWrapper brw = new BasicResponseWrapper();
+		brw.setSuccess(true);
+		return brw;
 	}
 	public List<User> getFriends(int userId){
 		return userRepo.getFreinds(userId);
