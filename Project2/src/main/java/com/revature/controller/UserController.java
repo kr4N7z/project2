@@ -28,7 +28,8 @@ import com.revature.utility.BasicResponseWrapper;
  */
 @RestController(value = "userController")
 @RequestMapping(path = "/user")
-@CrossOrigin(origins="*")
+//@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins = "http://wheretheboysat.s3-website-us-east-1.amazonaws.com")
 public class UserController {
 	UserService userService;
 
@@ -60,7 +61,7 @@ public class UserController {
 	public List<User> getFriends(HttpServletRequest req) {
 //		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
 //		List<User> friends = userService.getFriends(userId);
-		
+
 		HttpSession session = req.getSession(false);
 		System.out.println("we entered the myfriends controller");
 		if(session==null) {
@@ -80,7 +81,7 @@ public class UserController {
 		List<User> users = userService.getAllUsers();
 		return users;
 	}
-	
+
 	@RequestMapping(value = "/testSession", method = RequestMethod.POST)
 	public ArrayList<String> getAllUsers(HttpSession session) {
 		ArrayList<String> res = new ArrayList<>();
@@ -90,7 +91,7 @@ public class UserController {
 			String current = iterator.next();
 			res.add(current);
 			System.out.println("iterator item: "+ current);
-			
+
 		}
 		return res;
 	}

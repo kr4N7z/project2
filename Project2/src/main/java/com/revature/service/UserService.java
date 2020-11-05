@@ -40,23 +40,25 @@ public class UserService {
 		User user = userRepo.findOneByEmail(email);
 		if (enc.matches(password, user.getPassword())) {
 			System.out.println("got a match trying to create a session");
-//			try {
-//				InetAddress ipAddress = InetAddress.getByName(req.getRemoteAddr().toString());
-//				GeoIpService geoIpService = new GeoIpService();
-//				GeoIp location  = geoIpService.getLocation(ipAddress);
-//				user.setLastState(location.getState());
-//				user.setLatitude(Float.valueOf(location.getLatitude()));
-//				user.setLongitude(Float.valueOf(location.getLongitude()));
-//
-//			} catch (UnknownHostException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			//try {
+				//String remoteAddress = req.getRemoteAddr();
+				//String remoteAddress = req.getLocalAddr();
+				//InetAddress ipAddress = InetAddress.getByName(remoteAddress);
+				//GeoIpService geoIpService = new GeoIpService();
+				//GeoIp location = geoIpService.getLocation(ipAddress);
+				//user.setLastState(location.getState());
+				//user.setLatitude(Float.valueOf(location.getLatitude()));
+				//user.setLongitude(Float.valueOf(location.getLongitude()));
 
-			//HttpSession session = req.getSession().setAttribute(name, value);
-			req.getSession().setAttribute("user_id", user.getUserID());
-			req.getSession(false).setAttribute("first_name", user.getFirstName());
-			req.getSession(false).setAttribute("last_name", user.getLastName());
+			//} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+			//	e.printStackTrace();
+			//}
+//
+			HttpSession session = req.getSession();
+			session.setAttribute("user_id", user.getUserID());
+			session.setAttribute("first_name", user.getFirstName());
+			session.setAttribute("last_name", user.getLastName());
 			return user;
 		}
 
@@ -64,7 +66,7 @@ public class UserService {
 	}
 
 	public BasicResponseWrapper logout(HttpServletRequest req) {
-		
+
 		req.getSession().invalidate();
 		BasicResponseWrapper brw = new BasicResponseWrapper();
 		brw.setSuccess(true);
@@ -79,11 +81,13 @@ public class UserService {
 		brw.setSuccess(true);
 		return brw;
 	}
-	public List<User> getFriends(int userId){
+
+	public List<User> getFriends(int userId) {
 		return userRepo.getFreinds(userId);
 
 	}
-	public List<User> getAllUsers(){
+
+	public List<User> getAllUsers() {
 		return userRepo.getAllUsers();
 	}
 

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,7 @@ import com.revature.service.MessageService;
 
 @RestController(value = "messagesController")
 @RequestMapping(path = "/messages")
+@CrossOrigin(origins = "http://wheretheboysat.s3-website-us-east-1.amazonaws.com")
 public class MessagesController {
 	MessageService messageService;
 	
