@@ -80,7 +80,7 @@ public class FriendshipRepositoryImpl implements FriendshipRepository {
 			s.close();
 		}
 		
-		
+		System.out.println(friends.toString());
 		return friends;
 	}
 

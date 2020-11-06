@@ -1,7 +1,5 @@
 package com.revature.controller;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,7 +56,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public User login(@RequestBody String body, HttpServletRequest req, HttpServletResponse response,@ModelAttribute("currentUser") User userAttribute) {
+	public User login(@RequestBody String body, HttpSession session, HttpServletResponse response,@ModelAttribute("currentUser") User userAttribute) {
 		Gson gson = new Gson();
 		User user = gson.fromJson(body, User.class);
 
@@ -80,9 +78,10 @@ public class UserController {
 			//	e.printStackTrace();
 			//}
 //
-			req.getSession().setAttribute("user_id", userDb.getUserID());
-			req.getSession().setAttribute("first_name", userDb.getFirstName());
-			req.getSession().setAttribute("last_name", userDb.getLastName());
+
+			session.setAttribute("user_id", userDb.getUserID());
+			session.setAttribute("first_name", userDb.getFirstName());
+			session.setAttribute("last_name", userDb.getLastName());
 			userAttribute.setFirstName(userDb.getFirstName());
 			userAttribute.setLastName(userDb.getLastName());
 			userAttribute.setUserID(userDb.getUserID());
@@ -104,7 +103,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
-	public List<User> getFriends(@ModelAttribute("currentUser") User userAttribute) {
+
+	public String getFriends(@ModelAttribute("currentUser") User userAttribute, HttpSession session, HttpServletResponse response) {
 //		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
 //		List<User> friends = userService.getFriends(userId);
 
@@ -118,10 +118,15 @@ public class UserController {
 			//	System.out.println("iterator item: "+ iterator.next());
 			//}
 		//}
-		List<User> friends = userService.getFriends(Integer.valueOf(req.getParameter("userId").toString()));
-		System.out.println(friends.toString());
-
-		return friends;
+		//System.out.println("getfriends session : " +session.getId());
+		//System.out.println(session.getAttribute("user_id"));
+		//System.out.println("userid: "+ Integer.valueOf(userAttribute.getUserID()));
+		List<User> friends = userService.getFriends(Integer.valueOf(userAttribute.getUserID()));
+		
+		Gson gson = new Gson();
+		response.setContentType("application/json");
+		String rrsJson = gson.toJson(friends);
+		return rrsJson;
 	}
 	
 	@RequestMapping(value = "/allusers", method = RequestMethod.GET)
