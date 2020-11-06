@@ -115,9 +115,9 @@ public class UserController {
 			//	System.out.println("iterator item: "+ iterator.next());
 			//}
 		//}
-		System.out.println("getfriends session : " +session.getId());
-		System.out.println(session.getAttribute("user_id"));
-		System.out.println("userid: "+ Integer.valueOf(userAttribute.getUserID()));
+		//System.out.println("getfriends session : " +session.getId());
+		//System.out.println(session.getAttribute("user_id"));
+		//System.out.println("userid: "+ Integer.valueOf(userAttribute.getUserID()));
 		List<User> friends = userService.getFriends(Integer.valueOf(userAttribute.getUserID()));
 		
 		Gson gson = new Gson();
