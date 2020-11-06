@@ -80,13 +80,15 @@ public class UserController {
 			//	e.printStackTrace();
 			//}
 //
-
 			req.getSession().setAttribute("user_id", userDb.getUserID());
 			req.getSession().setAttribute("first_name", userDb.getFirstName());
 			req.getSession().setAttribute("last_name", userDb.getLastName());
 			userAttribute.setFirstName(userDb.getFirstName());
 			userAttribute.setLastName(userDb.getLastName());
 			userAttribute.setUserID(userDb.getUserID());
+			session.setAttribute("user_id", userDb.getUserID());
+			session.setAttribute("first_name", userDb.getFirstName());
+			session.setAttribute("last_name", userDb.getLastName());
 
 			//String valueString =gson.toJson(user);
 			//Cookie createSession = new Cookie(req.getSession().getId(), valueString);
@@ -102,12 +104,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
-
 	public List<User> getFriends(@ModelAttribute("currentUser") User userAttribute) {
 //		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
 //		List<User> friends = userService.getFriends(userId);
 
-		System.out.println("we entered the myfriends controller");
+		System.out.println(req.getParameter("userId"));
 		//if(session==null) {
 			//System.out.println("session is null!");
 		//}else {
@@ -117,8 +118,8 @@ public class UserController {
 			//	System.out.println("iterator item: "+ iterator.next());
 			//}
 		//}
-		List<User> friends = userService.getFriends(Integer.valueOf(userAttribute.getUserID()));
-
+		List<User> friends = userService.getFriends(Integer.valueOf(req.getParameter("userId").toString()));
+		System.out.println(friends.toString());
 
 		return friends;
 	}
