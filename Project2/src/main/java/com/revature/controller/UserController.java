@@ -104,11 +104,10 @@ public class UserController {
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 
-	public String getFriends(@ModelAttribute("currentUser") User userAttribute, HttpSession session, HttpServletResponse response) {
+	public List<User> getFriends(@ModelAttribute("currentUser") User userAttribute, HttpSession session,HttpServletRequest req, HttpServletResponse response) {
 //		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
 //		List<User> friends = userService.getFriends(userId);
 
-		System.out.println(req.getParameter("userId"));
 		//if(session==null) {
 			//System.out.println("session is null!");
 		//}else {
@@ -121,12 +120,14 @@ public class UserController {
 		//System.out.println("getfriends session : " +session.getId());
 		//System.out.println(session.getAttribute("user_id"));
 		//System.out.println("userid: "+ Integer.valueOf(userAttribute.getUserID()));
-		List<User> friends = userService.getFriends(Integer.valueOf(userAttribute.getUserID()));
+		List<User> friends = userService.getFriends(Integer.valueOf(req.getParameter("userId")));
 		
-		Gson gson = new Gson();
-		response.setContentType("application/json");
-		String rrsJson = gson.toJson(friends);
-		return rrsJson;
+//		Gson gson = new Gson();
+//		response.setContentType("application/json");
+//		String rrsJson = gson.toJson(friends);
+//		return rrsJson;
+		System.out.println(friends);
+		return friends;
 	}
 	
 	@RequestMapping(value = "/allusers", method = RequestMethod.GET)
