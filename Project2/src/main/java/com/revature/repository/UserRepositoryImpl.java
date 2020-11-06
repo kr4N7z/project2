@@ -161,6 +161,7 @@ public class UserRepositoryImpl implements UserRepository {
 			Root<User> root = cu.from(User.class);
 			
 			Path<Object> stateRoot = root.get("email");
+			cu.set(root.get("email"),email);
 			cu.set(root.get("firstName"), firstName);
 			cu.set(root.get("lastName"), lastName);
 			Predicate whereUser = cb.equal(root.get("userID"), userId);
