@@ -109,15 +109,15 @@ public class UserController {
 
 		HttpSession session = req.getSession(false);
 		System.out.println("we entered the myfriends controller");
-		if(session==null) {
+		//if(session==null) {
 			System.out.println("session is null!");
-		}else {
-			System.out.println("trying to print the attribute names: ");
-			Iterator<String> iterator = session.getAttributeNames().asIterator();
-			while(iterator.hasNext()) {
-				System.out.println("iterator item: "+ iterator.next());
-			}
-		}
+		//}else {
+			//System.out.println("trying to print the attribute names: ");
+			//Iterator<String> iterator = session.getAttributeNames().asIterator();
+			//while(iterator.hasNext()) {
+			//	System.out.println("iterator item: "+ iterator.next());
+			//}
+		//}
 		List<User> friends = userService.getFriends(Integer.valueOf(session.getAttribute("user_id").toString()));
 
 
@@ -131,19 +131,19 @@ public class UserController {
 	}
 
 
-	@RequestMapping(value = "/testSession", method = RequestMethod.POST)
-	public ArrayList<String> getAllUsers(HttpSession session) {
-		ArrayList<String> res = new ArrayList<>();
-		Iterator<String> iterator = session.getAttributeNames().asIterator();
-		System.out.println("printing out the session attribute names");
-		while(iterator.hasNext()) {
-			String current = iterator.next();
-			res.add(current);
-			System.out.println("iterator item: "+ current);
+	//@RequestMapping(value = "/testSession", method = RequestMethod.POST)
+	//public ArrayList<String> getAllUsers(HttpSession session) {
+		//ArrayList<String> res = new ArrayList<>();
+		//Iterator<String> iterator = session.getAttributeNames().asIterator();
+		//System.out.println("printing out the session attribute names");
+		//while(iterator.hasNext()) {
+		///	String current = iterator.next();
+		//	res.add(current);
+		//	System.out.println("iterator item: "+ current);
 
-		}
-		return res;
-	}
+		//}
+		//return res;
+	//}
 
 	@ModelAttribute("currentUser")
 	public User userAttributes() {
