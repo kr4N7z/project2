@@ -84,6 +84,9 @@ public class UserController {
 			userAttribute.setFirstName(userDb.getFirstName());
 			userAttribute.setLastName(userDb.getLastName());
 			userAttribute.setUserID(userDb.getUserID());
+			session.setAttribute("user_id", userDb.getUserID());
+			session.setAttribute("first_name", userDb.getFirstName());
+			session.setAttribute("last_name", userDb.getLastName());
 
 		}
 			return userDb;
@@ -96,19 +99,30 @@ public class UserController {
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 
-	public String getFriends(@ModelAttribute("currentUser") User userAttribute, HttpSession session, HttpServletResponse response) {
+	public List<User> getFriends(@ModelAttribute("currentUser") User userAttribute, HttpSession session,HttpServletRequest req, HttpServletResponse response) {
+//		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
+//		List<User> friends = userService.getFriends(userId);
 
-		System.out.println("we entered the myfriends controller");
-
+		//if(session==null) {
+			//System.out.println("session is null!");
+		//}else {
+			//System.out.println("trying to print the attribute names: ");
+			//Iterator<String> iterator = session.getAttributeNames().asIterator();
+			//while(iterator.hasNext()) {
+			//	System.out.println("iterator item: "+ iterator.next());
+			//}
+		//}
 		//System.out.println("getfriends session : " +session.getId());
 		//System.out.println(session.getAttribute("user_id"));
 		//System.out.println("userid: "+ Integer.valueOf(userAttribute.getUserID()));
-		List<User> friends = userService.getFriends(Integer.valueOf(userAttribute.getUserID()));
+		List<User> friends = userService.getFriends(Integer.valueOf(req.getParameter("userId")));
 		
-		Gson gson = new Gson();
-		response.setContentType("application/json");
-		String rrsJson = gson.toJson(friends);
-		return rrsJson;
+//		Gson gson = new Gson();
+//		response.setContentType("application/json");
+//		String rrsJson = gson.toJson(friends);
+//		return rrsJson;
+		System.out.println(friends);
+		return friends;
 	}
 	
 	@RequestMapping(value = "/allusers", method = RequestMethod.GET)
