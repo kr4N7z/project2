@@ -1,3 +1,4 @@
+
 package com.revature.service;
 
 import java.io.File;
@@ -8,7 +9,6 @@ import java.net.UnknownHostException;
 import java.sql.Date;
 import java.util.List;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,13 +16,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.jr.ob.impl.JSONReader;
 import com.google.gson.Gson;
 import com.revature.models.GeoIp;
 import com.revature.models.User;
 import com.revature.repository.UserRepository;
 import com.revature.repository.UserRepositoryImpl;
+import com.revature.utility.BasicResponseWrapper;
 import com.revature.utility.Encryption;
+
 
 @Service
 public class UserService {
@@ -61,8 +62,8 @@ public class UserService {
 			Gson gson = new Gson();
 			
 			req.getSession().setAttribute("user_id", user.getUserID());
-			req.getSession().setAttribute("first_name", user.getFirstName());
-			req.getSession().setAttribute("last_name", user.getLastName());
+			req.getSession(false).setAttribute("first_name", user.getFirstName());
+			req.getSession(false).setAttribute("last_name", user.getLastName());
 			//String valueString =gson.toJson(user);
 			//Cookie createSession = new Cookie(req.getSession().getId(), valueString);
 			//createSession.setPath(req.getContextPath());
@@ -73,14 +74,20 @@ public class UserService {
 		return user;
 	}
 
-	public void logout(HttpServletRequest req) {
+	public BasicResponseWrapper logout(HttpServletRequest req) {
 		req.getSession().invalidate();
+		BasicResponseWrapper bsw = new BasicResponseWrapper();
+		bsw.setSuccess(true);
+		return bsw;
 	}
 
-	public void register(User user) {
+	public BasicResponseWrapper register(User user) {
 		User newUser = new User("user", user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(),
 				0f, 0f, "", new Date(0), new Date(0));
 		userRepo.insert(newUser);
+		BasicResponseWrapper bsw = new BasicResponseWrapper();
+		bsw.setSuccess(true);
+		return bsw;
 	}
 
 	public List<User> getFriends(int userId) {
