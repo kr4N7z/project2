@@ -37,7 +37,6 @@ import com.revature.utility.Encryption;
 @RequestMapping(path = "/user")
 @CrossOrigin
 @SessionAttributes("currentUser")
-//@CrossOrigin(origins = "http://wheretheboysat.s3-website-us-east-1.amazonaws.com")
 public class UserController {
 	UserService userService;
 	UserRepository userRepo;
@@ -86,10 +85,6 @@ public class UserController {
 			userAttribute.setLastName(userDb.getLastName());
 			userAttribute.setUserID(userDb.getUserID());
 
-			//String valueString =gson.toJson(user);
-			//Cookie createSession = new Cookie(req.getSession().getId(), valueString);
-			//createSession.setPath(req.getContextPath());
-			//response.addCookie(createSession);
 		}
 			return userDb;
 	}
@@ -102,19 +97,9 @@ public class UserController {
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 
 	public String getFriends(@ModelAttribute("currentUser") User userAttribute, HttpSession session, HttpServletResponse response) {
-//		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
-//		List<User> friends = userService.getFriends(userId);
 
 		System.out.println("we entered the myfriends controller");
-		//if(session==null) {
-			//System.out.println("session is null!");
-		//}else {
-			//System.out.println("trying to print the attribute names: ");
-			//Iterator<String> iterator = session.getAttributeNames().asIterator();
-			//while(iterator.hasNext()) {
-			//	System.out.println("iterator item: "+ iterator.next());
-			//}
-		//}
+
 		//System.out.println("getfriends session : " +session.getId());
 		//System.out.println(session.getAttribute("user_id"));
 		//System.out.println("userid: "+ Integer.valueOf(userAttribute.getUserID()));
@@ -133,19 +118,6 @@ public class UserController {
 	}
 
 
-	//@RequestMapping(value = "/testSession", method = RequestMethod.POST)
-	//public ArrayList<String> getAllUsers(HttpSession session) {
-		//ArrayList<String> res = new ArrayList<>();
-		//Iterator<String> iterator = session.getAttributeNames().asIterator();
-		//System.out.println("printing out the session attribute names");
-		//while(iterator.hasNext()) {
-		///	String current = iterator.next();
-		//	res.add(current);
-		//	System.out.println("iterator item: "+ current);
-
-		//}
-		//return res;
-	//}
 
 	@ModelAttribute("currentUser")
 	public User userAttributes() {
