@@ -109,7 +109,7 @@ public class UserController {
 
 		System.out.println("we entered the myfriends controller");
 		//if(session==null) {
-			System.out.println("session is null!");
+			//System.out.println("session is null!");
 		//}else {
 			//System.out.println("trying to print the attribute names: ");
 			//Iterator<String> iterator = session.getAttributeNames().asIterator();
