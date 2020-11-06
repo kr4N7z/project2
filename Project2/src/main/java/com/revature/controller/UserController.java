@@ -1,6 +1,5 @@
 package com.revature.controller;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +21,9 @@ import com.revature.models.User;
 import com.revature.repository.UserRepository;
 import com.revature.repository.UserRepositoryImpl;
 import com.revature.service.UserService;
+import com.revature.utility.BasicResponseWrapper;
 import com.revature.utility.Encryption;
+
 
 /*
  * Using a Spring controller we can easily define endpoints and mappings!
@@ -36,28 +37,28 @@ import com.revature.utility.Encryption;
 @RequestMapping(path = "/user")
 @CrossOrigin
 @SessionAttributes("currentUser")
-//@CrossOrigin(origins = "http://wheretheboysat.s3-website-us-east-1.amazonaws.com")
 public class UserController {
 	UserService userService;
 	UserRepository userRepo;
 	PasswordEncoder enc;
-	
+
 	UserController(){
 		userService = new UserService();
 		userRepo = new UserRepositoryImpl();
 		enc = Encryption.getEncoder();
 	}
-	
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public void registertUser(@RequestBody User user) {
-		userService.register(user);
+	public BasicResponseWrapper registertUser(@RequestBody User user) {
+		System.out.println(user.toString());
+		return userService.register(user);
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public User login(@RequestBody String body, HttpServletRequest req, HttpServletResponse response,@ModelAttribute("currentUser") User userAttribute) {
+	public User login(@RequestBody String body, HttpSession session, HttpServletResponse response,@ModelAttribute("currentUser") User userAttribute) {
 		Gson gson = new Gson();
 		User user = gson.fromJson(body, User.class);
-		
+
 		User userDb = userRepo.findOneByEmail(user.getEmail());
 		if (enc.matches(user.getPassword(), userDb.getPassword())) {
 			System.out.println("got a match trying to create a session");
@@ -75,45 +76,68 @@ public class UserController {
 				// TODO Auto-generated catch block
 			//	e.printStackTrace();
 			//}
-//			
-			
-			req.getSession().setAttribute("user_id", userDb.getUserID());
-			req.getSession().setAttribute("first_name", userDb.getFirstName());
-			req.getSession().setAttribute("last_name", userDb.getLastName());
+//
+
+			session.setAttribute("user_id", userDb.getUserID());
+			session.setAttribute("first_name", userDb.getFirstName());
+			session.setAttribute("last_name", userDb.getLastName());
 			userAttribute.setFirstName(userDb.getFirstName());
 			userAttribute.setLastName(userDb.getLastName());
 			userAttribute.setUserID(userDb.getUserID());
+			session.setAttribute("user_id", userDb.getUserID());
+			session.setAttribute("first_name", userDb.getFirstName());
+			session.setAttribute("last_name", userDb.getLastName());
 
-			//String valueString =gson.toJson(user);
-			//Cookie createSession = new Cookie(req.getSession().getId(), valueString);
-			//createSession.setPath(req.getContextPath());
-			//response.addCookie(createSession);
 		}
 			return userDb;
 	}
 
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public void logout( HttpServletRequest req) {
-		userService.logout( req);
+		 userService.logout( req);
 	}
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
-	public List<User> getFriends(@ModelAttribute("currentUser") User userAttribute) {
-		System.out.println(userAttribute.getUserID());
-		List<User> friends = userService.getFriends(userAttribute.getUserID());
+
+	public List<User> getFriends(@ModelAttribute("currentUser") User userAttribute, HttpSession session,HttpServletRequest req, HttpServletResponse response) {
+//		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
+//		List<User> friends = userService.getFriends(userId);
+
+		//if(session==null) {
+			//System.out.println("session is null!");
+		//}else {
+			//System.out.println("trying to print the attribute names: ");
+			//Iterator<String> iterator = session.getAttributeNames().asIterator();
+			//while(iterator.hasNext()) {
+			//	System.out.println("iterator item: "+ iterator.next());
+			//}
+		//}
+		//System.out.println("getfriends session : " +session.getId());
+		//System.out.println(session.getAttribute("user_id"));
+		//System.out.println("userid: "+ Integer.valueOf(userAttribute.getUserID()));
+		List<User> friends = userService.getFriends(Integer.valueOf(req.getParameter("userId")));
+		
+//		Gson gson = new Gson();
+//		response.setContentType("application/json");
+//		String rrsJson = gson.toJson(friends);
+//		return rrsJson;
+		System.out.println(friends);
 		return friends;
 	}
+	
 	@RequestMapping(value = "/allusers", method = RequestMethod.GET)
-	public List<User> getAllUsers(HttpSession session) {
+	public List<User> getAllUsers() {
 		List<User> users = userService.getAllUsers();
 		return users;
 	}
-	
+
+
+
 	@ModelAttribute("currentUser")
 	public User userAttributes() {
 		return new User();
 	}
-	
+
 	@RequestMapping(value = "/userByEmail", method = RequestMethod.GET)
 	public User getUserByEmail(@RequestParam("email") String email) {
 		return userService.getUserByEmail(email);
