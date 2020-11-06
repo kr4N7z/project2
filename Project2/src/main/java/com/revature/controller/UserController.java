@@ -103,11 +103,10 @@ public class UserController {
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 
-	public List<User> getFriends(HttpServletRequest req) {
+	public List<User> getFriends(@ModelAttribute("currentUser") User userAttribute) {
 //		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
 //		List<User> friends = userService.getFriends(userId);
 
-		HttpSession session = req.getSession(false);
 		System.out.println("we entered the myfriends controller");
 		//if(session==null) {
 			System.out.println("session is null!");
@@ -118,7 +117,7 @@ public class UserController {
 			//	System.out.println("iterator item: "+ iterator.next());
 			//}
 		//}
-		List<User> friends = userService.getFriends(Integer.valueOf(session.getAttribute("user_id").toString()));
+		List<User> friends = userService.getFriends(Integer.valueOf(userAttribute.getUserID()));
 
 
 		return friends;
