@@ -1,5 +1,8 @@
 package com.revature.controller;
 
+import java.io.IOException;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -103,7 +106,7 @@ public class UserController {
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 
-	public List<User> getFriends(@ModelAttribute("currentUser") User userAttribute) {
+	public String getFriends(@ModelAttribute("currentUser") User userAttribute, HttpServletRequest req, HttpServletResponse response) {
 //		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
 //		List<User> friends = userService.getFriends(userId);
 
@@ -117,10 +120,15 @@ public class UserController {
 			//	System.out.println("iterator item: "+ iterator.next());
 			//}
 		//}
+		System.out.println("getfriends session : " +req.getSession().getId());
+		System.out.println(req.getSession().getAttribute("user_id"));
+		System.out.println("userid: "+ Integer.valueOf(userAttribute.getUserID()));
 		List<User> friends = userService.getFriends(Integer.valueOf(userAttribute.getUserID()));
-
-
-		return friends;
+		
+		Gson gson = new Gson();
+		response.setContentType("application/json");
+		String rrsJson = gson.toJson(friends);
+		return rrsJson;
 	}
 	
 	@RequestMapping(value = "/allusers", method = RequestMethod.GET)
