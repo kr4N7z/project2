@@ -148,6 +148,34 @@ public class UserRepositoryImpl implements UserRepository {
 		}
 				
 	}
+	@Override
+	public void updateUser(int userId, String email,String firstName, String lastName) {
+		Session s = null;
+		Transaction tx = null;
+
+		try {
+			s = HibernateSessionFactory.getSession();
+			tx = s.beginTransaction();
+			CriteriaBuilder cb = s.getCriteriaBuilder();
+			CriteriaUpdate<User> cu = cb.createCriteriaUpdate(User.class);
+			Root<User> root = cu.from(User.class);
+			
+			Path<Object> stateRoot = root.get("email");
+			cu.set(root.get("firstName"), firstName);
+			cu.set(root.get("lastName"), lastName);
+			Predicate whereUser = cb.equal(root.get("userID"), userId);
+			cu.where(whereUser);
+			
+			s.createQuery(cu).executeUpdate();
+			tx.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			s.close();
+		}
+				
+	}
+
 
 	@Override
 	public User findOneByUserId(int userId) {

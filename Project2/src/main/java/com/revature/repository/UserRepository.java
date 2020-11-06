@@ -16,6 +16,6 @@ public interface UserRepository {
 	List<User> getAllUsers();
 	
 	void updateLocation(int userId, float latitude, float longitude, String state);
-	
+	void updateUser(int userId, String email,String firstName, String lastName);
 	User findOneByUserId(int userId); 
 }
