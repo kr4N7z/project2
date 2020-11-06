@@ -58,7 +58,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public User login(@RequestBody String body, HttpServletRequest req, HttpServletResponse response,@ModelAttribute("currentUser") User userAttribute) {
+	public User login(@RequestBody String body, HttpSession session, HttpServletResponse response,@ModelAttribute("currentUser") User userAttribute) {
 		Gson gson = new Gson();
 		User user = gson.fromJson(body, User.class);
 
@@ -81,9 +81,9 @@ public class UserController {
 			//}
 //
 
-			req.getSession().setAttribute("user_id", userDb.getUserID());
-			req.getSession().setAttribute("first_name", userDb.getFirstName());
-			req.getSession().setAttribute("last_name", userDb.getLastName());
+			session.setAttribute("user_id", userDb.getUserID());
+			session.setAttribute("first_name", userDb.getFirstName());
+			session.setAttribute("last_name", userDb.getLastName());
 			userAttribute.setFirstName(userDb.getFirstName());
 			userAttribute.setLastName(userDb.getLastName());
 			userAttribute.setUserID(userDb.getUserID());
