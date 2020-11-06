@@ -101,7 +101,7 @@ public class UserController {
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 
-	public String getFriends(@ModelAttribute("currentUser") User userAttribute, HttpServletRequest req, HttpServletResponse response) {
+	public String getFriends(@ModelAttribute("currentUser") User userAttribute, HttpSession session, HttpServletResponse response) {
 //		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
 //		List<User> friends = userService.getFriends(userId);
 
@@ -115,8 +115,8 @@ public class UserController {
 			//	System.out.println("iterator item: "+ iterator.next());
 			//}
 		//}
-		System.out.println("getfriends session : " +req.getSession().getId());
-		System.out.println(req.getSession().getAttribute("user_id"));
+		System.out.println("getfriends session : " +session.getId());
+		System.out.println(session.getAttribute("user_id"));
 		System.out.println("userid: "+ Integer.valueOf(userAttribute.getUserID()));
 		List<User> friends = userService.getFriends(Integer.valueOf(userAttribute.getUserID()));
 		
