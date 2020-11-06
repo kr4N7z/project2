@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -41,13 +42,13 @@ import com.revature.utility.Encryption;
 @SessionAttributes("currentUser")
 //@CrossOrigin(origins = "http://wheretheboysat.s3-website-us-east-1.amazonaws.com")
 public class UserController {
+	@Autowired
 	UserService userService;
+	@Autowired
 	UserRepository userRepo;
 	PasswordEncoder enc;
 
 	UserController(){
-		userService = new UserService();
-		userRepo = new UserRepositoryImpl();
 		enc = Encryption.getEncoder();
 	}
 
