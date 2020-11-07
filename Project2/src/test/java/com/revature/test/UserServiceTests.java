@@ -2,11 +2,11 @@
 
 	import javax.servlet.http.HttpServletRequest;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -34,14 +34,14 @@ public class UserServiceTests {
 		@InjectMocks
 		static UserService service;
 
-		@BeforeClass
+		@BeforeEach
 		public static void setUp(){
 			userRepo = new UserRepositoryImpl();
 			fRepo = new FriendshipRepositoryImpl();
 			service = new UserService();
 		}
 
-		@Before
+		@BeforeAll
 		public void perMethodSetUp() {
 			MockitoAnnotations.openMocks(this);
 		}
@@ -79,13 +79,13 @@ public class UserServiceTests {
 
 		
 
-		@After
+		@AfterEach
 		public void perMethodTearDown() {
 			
 		}
 		
 
-		@AfterClass
+		@AfterAll
 		public static void tearDown() {
 		}
 	
