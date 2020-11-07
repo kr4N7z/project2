@@ -100,4 +100,8 @@ public class UserService {
 	public User getUserByEmail(String email) {
         return userRepo.findOneByEmail(email);
     }
+	
+	public void updateUser(int userId, String email, String firstName, String lastName) {
+		userRepo.updateUser(userId, email, firstName, lastName);
+	}
 }

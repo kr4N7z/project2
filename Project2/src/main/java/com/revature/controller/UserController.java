@@ -125,6 +125,15 @@ public class UserController {
 		return friends;
 	}
 	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public void updateUser(HttpServletRequest req) {
+		int userId = Integer.valueOf(req.getParameter("userId"));
+		String email = req.getParameter("email");
+		String firstName = req.getParameter("firstName");
+		String lastName = req.getParameter("lastName");
+		userService.updateUser(userId, email, firstName, lastName);
+	}
+	
 	@RequestMapping(value = "/allusers", method = RequestMethod.GET)
 	public List<User> getAllUsers() {
 		List<User> users = userService.getAllUsers();
