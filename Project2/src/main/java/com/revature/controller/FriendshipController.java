@@ -66,7 +66,7 @@ public class FriendshipController {
 	@RequestMapping(value = "/removeFriendship", method = RequestMethod.POST)
 	public void removeFriendship(@RequestParam("receiverId") int receiverId,  @RequestParam("userId") int userId) {
 		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
-		Friendship fr = frimpl.getFriendship(userId), receiverId);
+		Friendship fr = frimpl.getFriendship(userId, receiverId);
 		frimpl.removeFriendship(fr);
 	}
 }
