@@ -1,21 +1,21 @@
 	package com.revature.test;
 
-	import javax.servlet.http.HttpServletRequest;
+	import java.sql.Date;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import javax.servlet.http.HttpServletRequest;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.revature.models.User;
-import com.revature.repository.FriendshipRepository;
 import com.revature.repository.FriendshipRepositoryImpl;
-import com.revature.repository.UserRepository;
 import com.revature.repository.UserRepositoryImpl;
 import com.revature.service.UserService;
 
@@ -25,24 +25,24 @@ public class UserServiceTests {
 
 
 		
-		@Mock static UserRepository userRepo;
+		@Mock static UserRepositoryImpl userRepo;
 		
-		@Mock
-		static FriendshipRepository fRepo;
+		@Mock static FriendshipRepositoryImpl fRepo;
 		
 		
-		@InjectMocks
-		static UserService service;
+		@InjectMocks static UserService service;
 
-		@BeforeEach
+		
+		@BeforeClass
 		public static void setUp(){
 			userRepo = new UserRepositoryImpl();
 			fRepo = new FriendshipRepositoryImpl();
 			service = new UserService();
 		}
 
-		@BeforeAll
+		@Before
 		public void perMethodSetUp() {
+
 			MockitoAnnotations.openMocks(this);
 		}
 
@@ -68,7 +68,8 @@ public class UserServiceTests {
 		@Test
 		public void testRegister(){
 			HttpServletRequest req = null;
-			User user = null;
+			User user = new User("user", "email", "password", "first", "last",
+						0f, 0f, "", new Date(0), new Date(0));
 			//user.setPassword("password");
 			Mockito.doNothing().when(userRepo).insert(Mockito.any());
 			service.register(user);
@@ -79,13 +80,13 @@ public class UserServiceTests {
 
 		
 
-		@AfterEach
+		@After
 		public void perMethodTearDown() {
 			
 		}
 		
 
-		@AfterAll
+		@AfterClass
 		public static void tearDown() {
 		}
 	
