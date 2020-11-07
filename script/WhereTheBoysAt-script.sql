@@ -6,7 +6,7 @@ create table users(
 	user_id serial PRIMARY KEY,
     user_type VARCHAR ( 10 ) NOT NULL,
     email VARCHAR UNIQUE NOT NULL,
-    password VARCHAR (25) NOT NULL, 
+    password VARCHAR NOT NULL, 
     first_name VARCHAR (25) NOT NULL, 
     last_name VARCHAR (25) NOT NULL, 
    	last_latitude float,
