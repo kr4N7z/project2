@@ -69,4 +69,12 @@ public class FriendshipController {
 		Friendship fr = frimpl.getFriendship(userId, receiverId);
 		frimpl.removeFriendship(fr);
 	}
+	
+	@RequestMapping(value = "/getUnapproved", method = RequestMethod.GET) 
+	public List<User> getUnapproved(@RequestParam("userId") int userId) {
+		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
+		return frimpl.getMyUnapproved(userId);
+	}
+		
+	
 }
