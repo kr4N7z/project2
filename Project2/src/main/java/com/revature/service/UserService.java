@@ -35,7 +35,7 @@ public class UserService {
 		//System.out.println("rawpassword = rawpassword?: " + enc.matches("rawpassword", enc.encode("rawpassword")));
 		//System.out.println(enc.encode("secret"));
 		User user = userRepo.findOneByEmail(email);
-		if (enc.matches(password, user.getPassword())) {
+		if (user!=null && enc.matches(password, user.getPassword())) {
 			System.out.println("got a match trying to create a session");
 			System.out.println("we absolutely are really actually creating changes.");
 			//try {
@@ -100,4 +100,8 @@ public class UserService {
 	public User getUserByEmail(String email) {
         return userRepo.findOneByEmail(email);
     }
+	
+	public void updateUser(int userId, String email, String firstName, String lastName) {
+		userRepo.updateUser(userId, email, firstName, lastName);
+	}
 }

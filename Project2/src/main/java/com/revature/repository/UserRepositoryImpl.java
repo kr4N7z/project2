@@ -121,7 +121,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public void updateLocation(int userId, float latitude, float longitude, String state) {
+	public void updateLocation(int userId, float latitude, float longitude, String state,Date lastLogin) {
 		Session s = null;
 		Transaction tx = null;
 
@@ -132,10 +132,10 @@ public class UserRepositoryImpl implements UserRepository {
 			CriteriaUpdate<User> cu = cb.createCriteriaUpdate(User.class);
 			Root<User> root = cu.from(User.class);
 			
-			Path<Object> stateRoot = root.get("email");
 			cu.set(root.get("lastState"), state);
 			cu.set(root.get("lastLatitude"), latitude);
 			cu.set(root.get("lastLongitude"), longitude);
+			cu.set(root.get("lastLogin"), lastLogin);
 			Predicate whereUser = cb.equal(root.get("userId"), userId);
 			cu.where(whereUser);
 			
