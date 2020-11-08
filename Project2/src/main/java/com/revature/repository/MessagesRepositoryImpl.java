@@ -28,6 +28,7 @@ public class MessagesRepositoryImpl implements MessagesRepository{
 
 		try {
 			s = HibernateSessionFactory.getSession();
+			tx=s.beginTransaction();
 			CriteriaBuilder cb = s.getCriteriaBuilder();
 			CriteriaQuery<Messages> cq = cb.createQuery(Messages.class);
 			Root<Messages> root = cq.from(Messages.class);
