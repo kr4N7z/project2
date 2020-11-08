@@ -92,8 +92,11 @@ public class UserService {
 	}
 
 	public List<User> getFriends(int userId) {
-		return userRepo.getFreinds(userId);
-
+		if(userId < 0) {
+			return null;
+		}else {
+			return userRepo.getFriends(userId);
+		}
 	}
 
 	public List<User> getAllUsers() {
@@ -105,6 +108,18 @@ public class UserService {
     }
 	
 	public void updateUser(int userId, String email, String firstName, String lastName) {
-		userRepo.updateUser(userId, email, firstName, lastName);
+		if(userId < 0) {
+			
+		}else if(!email.contains("@")) {
+			System.out.println("Invalid email");
+		}else if(!email.contains(".")){
+			System.out.println("Invalid email");
+		}else if(firstName.length() < 1) {
+			System.out.println("Invalid First Name");
+		}else if(lastName.length() < 1) {
+			System.out.println("Invalid Last Name");
+		}else {
+			userRepo.updateUser(userId, email, firstName, lastName);
+		}
 	}
 }

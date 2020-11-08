@@ -11,11 +11,11 @@ import com.revature.models.User;
 
 public class UserResponseWrapper extends User{
 	String errorMessage;
-	
+
 	public UserResponseWrapper(){
-		
+
 	}
-	
+
 	public UserResponseWrapper(User user,String  errorMessage){
 		super();
 		this.setEmail(user.getEmail());
@@ -30,7 +30,7 @@ public class UserResponseWrapper extends User{
 		this.setLastLogin(user.getLastLogin());
 		this.errorMessage=errorMessage;
 	}
-	
+
 	public String getErrorMessage() {
 		return errorMessage;
 	}
@@ -47,6 +47,6 @@ public class UserResponseWrapper extends User{
 				+ getLastState() + ", getCreatedOn()=" + getCreatedOn() + ", getLastLogin()=" + getLastLogin()
 				+ ", toString()=" + "]";
 	}
-	
-	
+
+
 }
