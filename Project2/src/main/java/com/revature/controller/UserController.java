@@ -29,6 +29,8 @@ import com.revature.service.GeoIpService;
 import com.revature.service.UserService;
 import com.revature.utility.BasicResponseWrapper;
 import com.revature.utility.Encryption;
+import com.revature.utility.UserWrapper;
+import com.revature.utility.Validation;
 
 
 /*

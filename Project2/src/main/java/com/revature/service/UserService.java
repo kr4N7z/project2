@@ -84,7 +84,7 @@ public class UserService {
 	}
 
 	public BasicResponseWrapper register(UserWrapper user) {
-		User newUser = new User("user", user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(),
+		User newUser = new User("user", user.getEmail(), enc.encode(user.getPassword()), user.getFirstName(), user.getLastName(),
 				0f, 0f, "", new Date(0), new Date(0));
 		userRepo.insert(newUser);
 		BasicResponseWrapper bsw = new BasicResponseWrapper();
