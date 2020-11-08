@@ -23,6 +23,7 @@ import com.revature.repository.UserRepositoryImpl;
 import com.revature.service.UserService;
 import com.revature.utility.BasicResponseWrapper;
 import com.revature.utility.Encryption;
+import com.revature.utility.UserResponseWrapper;
 
 
 /*
@@ -55,13 +56,18 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public User login(@RequestBody String body, HttpSession session, HttpServletResponse response,@ModelAttribute("currentUser") User userAttribute) {
+	public UserResponseWrapper login(@RequestBody String body, HttpSession session, HttpServletResponse response,@ModelAttribute("currentUser") User userAttribute) {
 		Gson gson = new Gson();
 		User user = gson.fromJson(body, User.class);
 
 		User userDb = userRepo.findOneByEmail(user.getEmail());
-		if (enc.matches(user.getPassword(), userDb.getPassword())) {
+		UserResponseWrapper urw = null;
+		if (userDb!=null &&enc.matches(user.getPassword(), userDb.getPassword())) {
 			System.out.println("got a match trying to create a session");
+			System.out.println("hitting the controller");
+			urw = new UserResponseWrapper(user, "");
+			System.out.println(userDb);
+			System.out.println(urw.toString());
 			//try {
 				//String remoteAddress = req.getRemoteAddr();
 				//String remoteAddress = req.getLocalAddr();
@@ -87,9 +93,11 @@ public class UserController {
 			session.setAttribute("user_id", userDb.getUserID());
 			session.setAttribute("first_name", userDb.getFirstName());
 			session.setAttribute("last_name", userDb.getLastName());
-
+			
+			
 		}
-			return userDb;
+
+			return urw;
 	}
 
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
