@@ -78,13 +78,13 @@ public class UserController {
 			//}
 //
 
-			session.setAttribute("user_id", userDb.getUserID());
+			session.setAttribute("user_id", userDb.getUserId());
 			session.setAttribute("first_name", userDb.getFirstName());
 			session.setAttribute("last_name", userDb.getLastName());
 			userAttribute.setFirstName(userDb.getFirstName());
 			userAttribute.setLastName(userDb.getLastName());
-			userAttribute.setUserID(userDb.getUserID());
-			session.setAttribute("user_id", userDb.getUserID());
+			userAttribute.setUserId(userDb.getUserId());
+			session.setAttribute("user_id", userDb.getUserId());
 			session.setAttribute("first_name", userDb.getFirstName());
 			session.setAttribute("last_name", userDb.getLastName());
 

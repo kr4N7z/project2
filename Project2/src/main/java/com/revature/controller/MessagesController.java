@@ -30,15 +30,15 @@ public class MessagesController {
 	}
 		
 	@RequestMapping(value = "/getMyMessages", method = RequestMethod.GET)
-	public List<Messages> getMyMessages(@ModelAttribute("currentUser") User userAttribute){
+	public List<Messages> getMyMessages(@ModelAttribute("currentUser") User userAttribute, @RequestParam("userId") int userId){
 		List<Messages> myMessages;
-		myMessages = messageService.getMyMessages(userAttribute.getUserID());
+		myMessages = messageService.getMyMessages(userId);
 		return myMessages;
 	}
 	
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
 	public void sendMessage(@RequestParam("message") String message, @RequestParam("received_id") int receivedId,
 			@ModelAttribute("currentUser") User userAttribute) {
-		messageService.sendMessage(userAttribute.getUserID(), receivedId, message);
+		messageService.sendMessage(userAttribute.getUserId(), receivedId, message);
 	}
 }
