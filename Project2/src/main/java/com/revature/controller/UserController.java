@@ -73,7 +73,7 @@ public class UserController {
 				InetAddress ipAddress = InetAddress.getByName(remoteAddress);
 				GeoIpService geoIpService = new GeoIpService();
 				GeoIp location = geoIpService.getLocation(ipAddress);
-				userDb.setLastState(location.getState());
+				userDb.setLastState(location.getState().replaceAll("\"", ""));
 				userDb.setLatitude(Float.valueOf(location.getLatitude()));
 				userDb.setLongitude(Float.valueOf(location.getLongitude()));
 				Date current = new Date(Calendar.getInstance().getTime().getTime());
