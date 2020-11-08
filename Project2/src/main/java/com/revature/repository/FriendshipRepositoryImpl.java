@@ -96,7 +96,7 @@ public class FriendshipRepositoryImpl implements FriendshipRepository {
 			CriteriaBuilder cb = s.getCriteriaBuilder();
 			CriteriaQuery<Friendship> cq = cb.createQuery(Friendship.class);
 			Root<Friendship> root = cq.from(Friendship.class);
-			cq.select(root).where(cb.equal(root.get("sender_id"), senderId));
+			cq.select(root).where(cb.equal(root.get("senderId"), senderId));
 			friends = s.createQuery(cq).getResultList();
 			
 			tx.commit();
@@ -123,7 +123,7 @@ public class FriendshipRepositoryImpl implements FriendshipRepository {
 			CriteriaBuilder cb = s.getCriteriaBuilder();
 			CriteriaQuery<Friendship> cq = cb.createQuery(Friendship.class);
 			Root<Friendship> root = cq.from(Friendship.class);
-			cq.select(root).where(cb.equal(root.get("sender_id"), senderId));
+			cq.select(root).where(cb.equal(root.get("senderId"), senderId));
 			Query<Friendship> q = s.createQuery(cq);
 			
 			friend = q.getSingleResult();
@@ -171,8 +171,8 @@ public class FriendshipRepositoryImpl implements FriendshipRepository {
 			CriteriaQuery<Friendship> cq = cb.createQuery(Friendship.class);
 			Root<Friendship> root = cq.from(Friendship.class);
 			
-			Predicate whereReceiver = cb.equal(root.get("receiver_id"), currUserId);
-			Predicate whereApproved = cb.equal(root.get("approved"), false);
+			Predicate whereReceiver = cb.equal(root.get("receiverId"), currUserId);
+			Predicate whereApproved = cb.equal(root.get("status"), false);
 			
 			Predicate finalQuery = cb.and(whereReceiver, whereApproved);
 			cq.where(finalQuery);

@@ -27,7 +27,7 @@ public class Friendship implements Serializable{
 	public Friendship() {}
 	
 	public Friendship(int _mainUserId, int _otherUserId, boolean _status) {
-		this.setReceiverId(_mainUserId);
+		this.setSenderId(_mainUserId);
 		this.setReceiverId(_otherUserId);
 		this.setStatus(_status);
 	}
@@ -36,7 +36,7 @@ public class Friendship implements Serializable{
 		return senderId;
 	}
 
-	public void setSenderrId(int senderId) {
+	public void setSenderId(int senderId) {
 		this.senderId = senderId;
 	}
 
