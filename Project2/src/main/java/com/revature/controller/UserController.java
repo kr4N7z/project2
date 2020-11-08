@@ -66,19 +66,19 @@ public class UserController {
 		User userDb = userRepo.findOneByEmail(user.getEmail());
 		if (enc.matches(user.getPassword(), userDb.getPassword())) {
 			System.out.println("got a match trying to create a session");
-			try {
-				String remoteAddress = req.getRemoteAddr();
-				InetAddress ipAddress = InetAddress.getByName(remoteAddress);
-				GeoIpService geoIpService = new GeoIpService();
-				GeoIp location = geoIpService.getLocation(ipAddress);
-				user.setLastState(location.getState());
-				user.setLatitude(Float.valueOf(location.getLatitude()));
-				user.setLongitude(Float.valueOf(location.getLongitude()));
-
-			} catch (UnknownHostException e) {
-				 //TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			try {
+//				String remoteAddress = req.getRemoteAddr();
+//				InetAddress ipAddress = InetAddress.getByName(remoteAddress);
+//				GeoIpService geoIpService = new GeoIpService();
+//				GeoIp location = geoIpService.getLocation(ipAddress);
+//				user.setLastState(location.getState());
+//				user.setLatitude(Float.valueOf(location.getLatitude()));
+//				user.setLongitude(Float.valueOf(location.getLongitude()));
+//
+//			} catch (UnknownHostException e) {
+//				 //TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 //
 
 			session.setAttribute("user_id", userDb.getUserId());
