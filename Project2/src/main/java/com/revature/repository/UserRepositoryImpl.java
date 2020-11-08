@@ -68,7 +68,7 @@ public class UserRepositoryImpl implements UserRepository {
 		return user;
 	}
 	@Override
-	public List<User> getFreinds(int senderId) {
+	public List<User> getFriends(int senderId) {
 		Session s = null;
 		Transaction tx = null;
 		List<User> friends = new ArrayList<>();
