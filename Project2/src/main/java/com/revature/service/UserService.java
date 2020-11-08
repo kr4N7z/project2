@@ -15,6 +15,7 @@ import com.revature.repository.UserRepository;
 import com.revature.repository.UserRepositoryImpl;
 import com.revature.utility.BasicResponseWrapper;
 import com.revature.utility.Encryption;
+import com.revature.utility.UserResponseWrapper;
 
 
 @Service
@@ -31,13 +32,15 @@ public class UserService {
 	// Think this needs HTTPSession session = req.getSession();
 	// then session.setAttribute() etc.. because right now this is setting the
 	// request attribute userId I think.
-	public User login(String email, String password, HttpServletRequest req) {
+	public UserResponseWrapper login(String email, String password, HttpServletRequest req) {
 		//System.out.println("rawpassword = rawpassword?: " + enc.matches("rawpassword", enc.encode("rawpassword")));
 		//System.out.println(enc.encode("secret"));
 		User user = userRepo.findOneByEmail(email);
+		UserResponseWrapper urw = new UserResponseWrapper(user, "");
 		if (user!=null && enc.matches(password, user.getPassword())) {
 			System.out.println("got a match trying to create a session");
-			System.out.println("we absolutely are really actually creating changes.");
+			System.out.println("nother line");
+			System.out.println("we gunna send backa  wrapper!");
 			//try {
 				//String remoteAddress = req.getRemoteAddr();
 				//String remoteAddress = req.getLocalAddr();
@@ -63,12 +66,12 @@ public class UserService {
 			//createSession.setPath(req.getContextPath());
 			//response.addCookie(createSession);
 			System.out.println("created session: " +req.getSession().getId());
-			return user;
+			return urw;
 		}else {
 			System.out.println("there was no match!");
 		}
 
-		return user;
+		return urw;
 	}
 
 	public BasicResponseWrapper logout(HttpServletRequest req) {
