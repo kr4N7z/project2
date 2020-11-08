@@ -2,6 +2,8 @@ package com.revature.controller;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,7 +76,8 @@ public class UserController {
 				userDb.setLastState(location.getState());
 				userDb.setLatitude(Float.valueOf(location.getLatitude()));
 				userDb.setLongitude(Float.valueOf(location.getLongitude()));
-				userRepo.updateLocation(userDb.getUserId(), userDb.getLastLatitude(), userDb.getLastLongitude(), userDb.getLastState());
+				Date current = new Date(Calendar.getInstance().getTime().getTime());
+				userRepo.updateLocation(userDb.getUserId(), userDb.getLastLatitude(), userDb.getLastLongitude(), userDb.getLastState(), current);
 			} catch (UnknownHostException e) {
 				 //TODO Auto-generated catch block
 				e.printStackTrace();
