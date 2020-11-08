@@ -24,11 +24,14 @@ import com.revature.repository.FriendshipRepositoryImpl;
 
 public class FriendshipController {
 	
-	
+	//
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public void insertFriendship(@RequestParam("receiverId") int receiverId, @RequestParam("approved") boolean approved, @RequestParam("userId") int userId) {
+		System.out.println("Not everything is broken");
 		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
 		Friendship fr = new Friendship(userId, receiverId, approved);
+		System.out.println(fr);
+		System.out.println("The brackets are fr");
 		frimpl.insertFriendship(fr);
 	}
 	
@@ -52,6 +55,7 @@ public class FriendshipController {
 		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
 		List<Friendship> friends = frimpl.viewMyFriendships(userId);
 		
+		//System.out.println(friends);
 		return friends; 
 	}
 	
@@ -73,7 +77,8 @@ public class FriendshipController {
 	@RequestMapping(value = "/getUnapproved", method = RequestMethod.GET) 
 	public List<User> getUnapproved(@RequestParam("userId") int userId) {
 		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
-		return frimpl.getMyUnapproved(userId);
+		List<User> tmp = frimpl.getMyUnapproved(userId);
+		return tmp;
 	}
 		
 	

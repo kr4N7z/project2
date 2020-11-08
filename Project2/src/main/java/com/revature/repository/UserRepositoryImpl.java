@@ -85,7 +85,7 @@ public class UserRepositoryImpl implements UserRepository {
 			
 			Predicate whereSender = builder.equal(rootFriendship.get("senderId"), senderId);
 			
-			Predicate whereUserId = builder.equal(rootUser.get("userID"),rootFriendship.get("receiverId"));
+			Predicate whereUserId = builder.equal(rootUser.get("userId"),rootFriendship.get("receiverId"));
 			
 			Predicate finalQuery = builder.and(statusTrue, whereSender, whereUserId);
 			criteria.where(finalQuery);
@@ -136,7 +136,7 @@ public class UserRepositoryImpl implements UserRepository {
 			cu.set(root.get("lastState"), state);
 			cu.set(root.get("lastLatitude"), latitude);
 			cu.set(root.get("lastLongitude"), longitude);
-			Predicate whereUser = cb.equal(root.get("userID"), userId);
+			Predicate whereUser = cb.equal(root.get("userId"), userId);
 			cu.where(whereUser);
 			
 			s.createQuery(cu).executeUpdate();
@@ -164,7 +164,7 @@ public class UserRepositoryImpl implements UserRepository {
 			cu.set(root.get("email"),email);
 			cu.set(root.get("firstName"), firstName);
 			cu.set(root.get("lastName"), lastName);
-			Predicate whereUser = cb.equal(root.get("userID"), userId);
+			Predicate whereUser = cb.equal(root.get("userId"), userId);
 			cu.where(whereUser);
 			
 			s.createQuery(cu).executeUpdate();
@@ -190,7 +190,7 @@ public class UserRepositoryImpl implements UserRepository {
 			CriteriaBuilder cb = s.getCriteriaBuilder();
 			CriteriaQuery<User> cq = cb.createQuery(User.class);
 			Root<User> root = cq.from(User.class);
-			cq.select(root).where(cb.equal(root.get("user_id"), userId));
+			cq.select(root).where(cb.equal(root.get("userId"), userId));
 			Query<User> q = s.createQuery(cq);
 			
 			friend = q.getSingleResult();

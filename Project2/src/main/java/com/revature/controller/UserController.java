@@ -78,13 +78,13 @@ public class UserController {
 			//}
 //
 
-			session.setAttribute("user_id", userDb.getUserID());
+			session.setAttribute("user_id", userDb.getUserId());
 			session.setAttribute("first_name", userDb.getFirstName());
 			session.setAttribute("last_name", userDb.getLastName());
 			userAttribute.setFirstName(userDb.getFirstName());
 			userAttribute.setLastName(userDb.getLastName());
-			userAttribute.setUserID(userDb.getUserID());
-			session.setAttribute("user_id", userDb.getUserID());
+			userAttribute.setUserId(userDb.getUserId());
+			session.setAttribute("user_id", userDb.getUserId());
 			session.setAttribute("first_name", userDb.getFirstName());
 			session.setAttribute("last_name", userDb.getLastName());
 
@@ -115,7 +115,7 @@ public class UserController {
 		//System.out.println("getfriends session : " +session.getId());
 		//System.out.println(session.getAttribute("user_id"));
 		//System.out.println("userid: "+ Integer.valueOf(userAttribute.getUserID()));
-		List<User> friends = userService.getFriends(Integer.valueOf(req.getParameter("userId")));
+		List<User> friends = userService.getFriends(Integer.parseInt(req.getParameter("userId")));
 		
 //		Gson gson = new Gson();
 //		response.setContentType("application/json");
