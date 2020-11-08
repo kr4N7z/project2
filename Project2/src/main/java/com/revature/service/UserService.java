@@ -16,6 +16,7 @@ import com.revature.repository.UserRepositoryImpl;
 import com.revature.utility.BasicResponseWrapper;
 import com.revature.utility.Encryption;
 import com.revature.utility.UserResponseWrapper;
+import com.revature.utility.UserWrapper;
 
 
 @Service
@@ -82,7 +83,7 @@ public class UserService {
 		return bsw;
 	}
 
-	public BasicResponseWrapper register(User user) {
+	public BasicResponseWrapper register(UserWrapper user) {
 		User newUser = new User("user", user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(),
 				0f, 0f, "", new Date(0), new Date(0));
 		userRepo.insert(newUser);

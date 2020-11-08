@@ -75,16 +75,16 @@ public class UserServiceTests {
 //			Mockito.verify(userRepo).findOneByEmail(Mockito.any());
 //		}
 		
-		@Test
-		public void testRegister(){
-			HttpServletRequest req = null;
-			User user = new User("user", "email", "password", "first", "last",
-						0f, 0f, "", new Date(0), new Date(0));
-			//user.setPassword("password");
-			Mockito.doNothing().when(userRepo).insert(Mockito.any());
-			service.register(user);
-			Mockito.verify(userRepo).insert(Mockito.any());
-		}
+//		@Test
+//		public void testRegister(){
+//			HttpServletRequest req = null;
+//			User user = new User("user", "email", "password", "first", "last",
+//						0f, 0f, "", new Date(0), new Date(0));
+//			//user.setPassword("password");
+//			Mockito.doNothing().when(userRepo).insert(Mockito.any());
+//			service.register(user);
+//			Mockito.verify(userRepo).insert(Mockito.any());
+//		}
 		
 		//reimbursement tests
 

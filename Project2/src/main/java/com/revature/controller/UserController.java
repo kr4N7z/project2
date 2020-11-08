@@ -53,34 +53,31 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public BasicResponseWrapper registertUser( @RequestBody User user) {
+	public BasicResponseWrapper registertUser( @RequestBody UserWrapper user) {
 		
 		BasicResponseWrapper brw = new BasicResponseWrapper();
+		brw.setSuccess(false);
 		Validation emailValidator = Validation.getInstance();
-//		
-//		if(!emailValidator.validEmail(user.getEmail())) {
-//			brw.setSuccess(false);
-//			brw.setErrorMessage("Invalid email format");
-//		}
-////		else if(!user.getFirstName().isBlank()) {
-////			brw.setSuccess(false);
-////			brw.setErrorMessage("First name must not be blank");
-////		}
-////		else if (!user.getLastName().isBlank()) {
-////			brw.setSuccess(false);
-////			brw.setErrorMessage("Last name must not be blank");
-////		}
-//		else if(!(user.getPassword().length()>5)) {
-//			brw.setSuccess(false);
-//			brw.setErrorMessage("Password is too short");
-//		}
-//		else if( !user.getPassword().equals("")) {
-//			brw.setSuccess(false);
-//			brw.setErrorMessage("Passwords do not match");
-//		}
-//		else {
+		System.out.println(user.toString());
+		
+		if(!emailValidator.validEmail(user.getEmail())) {
+			brw.setErrorMessage("Invalid email format");
+		}
+		else if(user.getFirstName()==null || user.getFirstName().trim().length()==0) {
+			brw.setErrorMessage("First name must not be blank");
+		}
+		else if (user.getLastName()==null || user.getLastName().trim().length()==0) {
+			brw.setErrorMessage("Last name must not be blank");
+		}
+		else if(!(user.getPassword().length()>5)) {
+			brw.setErrorMessage("Password is too short");
+		}
+		else if( !user.getPassword().equals(user.getCpassword())) {
+			brw.setErrorMessage("Passwords do not match");
+		}
+		else {
 			brw =userService.register(user);
-//		}
+		}
 
 		return brw;
 	}
