@@ -1,5 +1,9 @@
 package com.revature.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.google.gson.Gson;
+import com.revature.models.GeoIp;
 import com.revature.models.User;
 import com.revature.repository.UserRepository;
 import com.revature.repository.UserRepositoryImpl;
+import com.revature.service.GeoIpService;
 import com.revature.service.UserService;
 import com.revature.utility.BasicResponseWrapper;
 import com.revature.utility.Encryption;
@@ -55,36 +61,36 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public User login(@RequestBody String body, HttpSession session, HttpServletResponse response,@ModelAttribute("currentUser") User userAttribute) {
+	public User login(@RequestBody String body, HttpSession session,HttpServletRequest req, HttpServletResponse response,@ModelAttribute("currentUser") User userAttribute) {
 		Gson gson = new Gson();
 		User user = gson.fromJson(body, User.class);
 
 		User userDb = userRepo.findOneByEmail(user.getEmail());
 		if (enc.matches(user.getPassword(), userDb.getPassword())) {
 			System.out.println("got a match trying to create a session");
-			//try {
-				//String remoteAddress = req.getRemoteAddr();
-				//String remoteAddress = req.getLocalAddr();
-				//InetAddress ipAddress = InetAddress.getByName(remoteAddress);
-				//GeoIpService geoIpService = new GeoIpService();
-				//GeoIp location = geoIpService.getLocation(ipAddress);
-				//user.setLastState(location.getState());
-				//user.setLatitude(Float.valueOf(location.getLatitude()));
-				//user.setLongitude(Float.valueOf(location.getLongitude()));
-
-			//} catch (UnknownHostException e) {
-				// TODO Auto-generated catch block
-			//	e.printStackTrace();
-			//}
+			try {
+				String remoteAddress = req.getRemoteAddr();
+				InetAddress ipAddress = InetAddress.getByName(remoteAddress);
+				GeoIpService geoIpService = new GeoIpService();
+				GeoIp location = geoIpService.getLocation(ipAddress);
+				userDb.setLastState(location.getState().replaceAll("\"", ""));
+				userDb.setLatitude(Float.valueOf(location.getLatitude()));
+				userDb.setLongitude(Float.valueOf(location.getLongitude()));
+				Date current = new Date(Calendar.getInstance().getTime().getTime());
+				userRepo.updateLocation(userDb.getUserId(), userDb.getLastLatitude(), userDb.getLastLongitude(), userDb.getLastState(), current);
+			} catch (UnknownHostException e) {
+				 //TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 //
 
-			session.setAttribute("user_id", userDb.getUserID());
+			session.setAttribute("user_id", userDb.getUserId());
 			session.setAttribute("first_name", userDb.getFirstName());
 			session.setAttribute("last_name", userDb.getLastName());
 			userAttribute.setFirstName(userDb.getFirstName());
 			userAttribute.setLastName(userDb.getLastName());
-			userAttribute.setUserID(userDb.getUserID());
-			session.setAttribute("user_id", userDb.getUserID());
+			userAttribute.setUserId(userDb.getUserId());
+			session.setAttribute("user_id", userDb.getUserId());
 			session.setAttribute("first_name", userDb.getFirstName());
 			session.setAttribute("last_name", userDb.getLastName());
 
@@ -99,7 +105,7 @@ public class UserController {
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 
-	public List<User> getFriends(@ModelAttribute("currentUser") User userAttribute, HttpSession session,HttpServletRequest req, HttpServletResponse response) {
+	public List<User> getFriends(@RequestParam("userId") int userId,@ModelAttribute("currentUser") User userAttribute, HttpSession session,HttpServletRequest req, HttpServletResponse response) {
 //		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
 //		List<User> friends = userService.getFriends(userId);
 
@@ -115,7 +121,7 @@ public class UserController {
 		//System.out.println("getfriends session : " +session.getId());
 		//System.out.println(session.getAttribute("user_id"));
 		//System.out.println("userid: "+ Integer.valueOf(userAttribute.getUserID()));
-		List<User> friends = userService.getFriends(Integer.valueOf(req.getParameter("userId")));
+		List<User> friends = userService.getFriends(userId);
 		
 //		Gson gson = new Gson();
 //		response.setContentType("application/json");
