@@ -25,6 +25,7 @@ import com.revature.service.UserService;
 import com.revature.utility.BasicResponseWrapper;
 import com.revature.utility.Encryption;
 import com.revature.utility.UserResponseWrapper;
+import com.revature.utility.UserWrapper;
 import com.revature.utility.Validation;
 
 
@@ -52,35 +53,34 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public BasicResponseWrapper registertUser(@RequestBody User user, @RequestBody String cpassword) {
-		System.out.println(user.toString());
-		System.out.println(cpassword);
+	public BasicResponseWrapper registertUser( @RequestBody User user) {
+		
 		BasicResponseWrapper brw = new BasicResponseWrapper();
 		Validation emailValidator = Validation.getInstance();
-		
-		if(!emailValidator.validEmail(user.getEmail())) {
-			brw.setSuccess(false);
-			brw.setErrorMessage("Invalid email format");
-		}
-		else if(!user.getFirstName().isBlank()) {
-			brw.setSuccess(false);
-			brw.setErrorMessage("First name must not be blank");
-		}
-		else if (!user.getLastName().isBlank()) {
-			brw.setSuccess(false);
-			brw.setErrorMessage("Last name must not be blank");
-		}
-		else if(!(user.getPassword().length()>5)) {
-			brw.setSuccess(false);
-			brw.setErrorMessage("Password is too short");
-		}
-		else if( !user.getPassword().equals(cpassword)) {
-			brw.setSuccess(false);
-			brw.setErrorMessage("Passwords do not match");
-		}
-		else {
+//		
+//		if(!emailValidator.validEmail(user.getEmail())) {
+//			brw.setSuccess(false);
+//			brw.setErrorMessage("Invalid email format");
+//		}
+////		else if(!user.getFirstName().isBlank()) {
+////			brw.setSuccess(false);
+////			brw.setErrorMessage("First name must not be blank");
+////		}
+////		else if (!user.getLastName().isBlank()) {
+////			brw.setSuccess(false);
+////			brw.setErrorMessage("Last name must not be blank");
+////		}
+//		else if(!(user.getPassword().length()>5)) {
+//			brw.setSuccess(false);
+//			brw.setErrorMessage("Password is too short");
+//		}
+//		else if( !user.getPassword().equals("")) {
+//			brw.setSuccess(false);
+//			brw.setErrorMessage("Passwords do not match");
+//		}
+//		else {
 			brw =userService.register(user);
-		}
+//		}
 
 		return brw;
 	}
