@@ -33,9 +33,9 @@ public class MessagesRepositoryImpl implements MessagesRepository{
 			CriteriaQuery<Messages> cq = cb.createQuery(Messages.class);
 			Root<Messages> root = cq.from(Messages.class);
 			
-			Predicate whereSender = cb.equal(root.get("sender_id"), myId);
+			Predicate whereSender = cb.equal(root.get("senderId"), myId);
 			
-			Predicate whereReceiver = cb.equal(root.get("receiver_id"), myId);
+			Predicate whereReceiver = cb.equal(root.get("receivedId"), myId);
 			
 			Predicate finalQuery = cb.or(whereSender,whereReceiver);
 			
