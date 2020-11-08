@@ -21,7 +21,7 @@ public class UserResponseWrapper extends User{
 		this.setEmail(user.getEmail());
 		this.setFirstName(user.getFirstName());
 		this.setLastName(user.getLastName());
-		this.setUserID(user.getUserID());
+		this.setUserId(user.getUserId());
 		this.setUserType(user.getUserType());
 		this.setLatitude(user.getLastLatitude());
 		this.setLongitude(user.getLastLongitude());
@@ -39,7 +39,7 @@ public class UserResponseWrapper extends User{
 
 	@Override
 	public String toString() {
-		return "UserResponseWrapper [errorMessage=" + errorMessage + ", getUserID()=" + getUserID() + ", getUserType()="
+		return "UserResponseWrapper [errorMessage=" + errorMessage + ", getUserID()=" + getUserId() + ", getUserType()="
 				+ getUserType() + ", getEmail()=" + getEmail() + ", getPassword()=" + getPassword()
 				+ ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName() + ", getLastLatitude()="
 				+ getLastLatitude() + ", getLastLongitude()=" + getLastLongitude() + ", getLastState()="
