@@ -54,7 +54,7 @@ public class UserService {
 //			
 			Gson gson = new Gson();
 			
-			req.getSession().setAttribute("user_id", user.getUserId());
+			req.getSession().setAttribute("user_id", user.getUserID());
 			req.getSession().setAttribute("first_name", user.getFirstName());
 			req.getSession().setAttribute("last_name", user.getLastName());
 			//String valueString =gson.toJson(user);
