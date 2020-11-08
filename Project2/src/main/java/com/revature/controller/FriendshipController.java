@@ -20,8 +20,6 @@ import com.revature.repository.FriendshipRepositoryImpl;
 @RestController(value = "friendshipController")
 @RequestMapping(path = "/friendship")
 @CrossOrigin
-@SessionAttributes("currentUser")
-
 public class FriendshipController {
 	
 	

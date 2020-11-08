@@ -40,7 +40,6 @@ import com.revature.utility.Validation;
 @RestController(value = "userController")
 @RequestMapping(path = "/user")
 @CrossOrigin
-@SessionAttributes("currentUser")
 public class UserController {
 	UserService userService;
 	UserRepository userRepo;
