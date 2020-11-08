@@ -99,7 +99,7 @@ public class UserController {
 
 	@RequestMapping(value = "/myfriends", method = RequestMethod.GET)
 
-	public List<User> getFriends(@RequestParam("userId") int userId,@ModelAttribute("currentUser") User userAttribute, HttpSession session,HttpServletRequest req, HttpServletResponse response) {
+	public List<User> getFriends(@ModelAttribute("currentUser") User userAttribute, HttpSession session,HttpServletRequest req, HttpServletResponse response) {
 //		int userId = Integer.valueOf(session.getAttribute("user_id").toString());
 //		List<User> friends = userService.getFriends(userId);
 
@@ -115,7 +115,7 @@ public class UserController {
 		//System.out.println("getfriends session : " +session.getId());
 		//System.out.println(session.getAttribute("user_id"));
 		//System.out.println("userid: "+ Integer.valueOf(userAttribute.getUserID()));
-		List<User> friends = userService.getFriends(userId);
+		List<User> friends = userService.getFriends(Integer.valueOf(req.getParameter("userId")));
 		
 //		Gson gson = new Gson();
 //		response.setContentType("application/json");
