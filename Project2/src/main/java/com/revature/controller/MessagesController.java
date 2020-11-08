@@ -30,7 +30,7 @@ public class MessagesController {
 	}
 		
 	@RequestMapping(value = "/getMyMessages", method = RequestMethod.GET)
-	public List<Messages> getMyMessages(@ModelAttribute("currentUser") User userAttribute, @RequestParam("userId")int userId){
+	public List<Messages> getMyMessages(@RequestParam("userId")int userId){
 		List<Messages> myMessages;
 		myMessages = messageService.getMyMessages(userId);
 		return myMessages;
