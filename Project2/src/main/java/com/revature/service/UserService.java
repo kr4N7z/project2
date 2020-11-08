@@ -37,7 +37,6 @@ public class UserService {
 		User user = userRepo.findOneByEmail(email);
 		if (user!=null && enc.matches(password, user.getPassword())) {
 			System.out.println("got a match trying to create a session");
-			System.out.println("we absolutely are really actually creating changes.");
 			//try {
 				//String remoteAddress = req.getRemoteAddr();
 				//String remoteAddress = req.getLocalAddr();
