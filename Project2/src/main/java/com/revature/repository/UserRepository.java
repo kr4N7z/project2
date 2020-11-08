@@ -1,6 +1,5 @@
 package com.revature.repository;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.springframework.expression.spel.ast.FloatLiteral;
@@ -16,7 +15,7 @@ public interface UserRepository {
 	List<User> getFreinds(int senderID);
 	List<User> getAllUsers();
 	
-	void updateLocation(int userId, float latitude, float longitude, String state, Date login);
+	void updateLocation(int userId, float latitude, float longitude, String state);
 	void updateUser(int userId, String email,String firstName, String lastName);
 	User findOneByUserId(int userId); 
 }
