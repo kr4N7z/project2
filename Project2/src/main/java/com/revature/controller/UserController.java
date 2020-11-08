@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.validation.Validator;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +25,7 @@ import com.revature.service.UserService;
 import com.revature.utility.BasicResponseWrapper;
 import com.revature.utility.Encryption;
 import com.revature.utility.UserResponseWrapper;
+import com.revature.utility.Validation;
 
 
 /*
@@ -50,22 +52,57 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public BasicResponseWrapper registertUser(@RequestBody User user) {
+	public BasicResponseWrapper registertUser(@RequestBody User user, @RequestBody String cpassword) {
 		System.out.println(user.toString());
-		return userService.register(user);
+		System.out.println(cpassword);
+		BasicResponseWrapper brw = new BasicResponseWrapper();
+		Validation emailValidator = Validation.getInstance();
+		
+		if(!emailValidator.validEmail(user.getEmail())) {
+			brw.setSuccess(false);
+			brw.setErrorMessage("Invalid email format");
+		}
+		else if(!user.getFirstName().isBlank()) {
+			brw.setSuccess(false);
+			brw.setErrorMessage("First name must not be blank");
+		}
+		else if (!user.getLastName().isBlank()) {
+			brw.setSuccess(false);
+			brw.setErrorMessage("Last name must not be blank");
+		}
+		else if(!(user.getPassword().length()>5)) {
+			brw.setSuccess(false);
+			brw.setErrorMessage("Password is too short");
+		}
+		else if( !user.getPassword().equals(cpassword)) {
+			brw.setSuccess(false);
+			brw.setErrorMessage("Passwords do not match");
+		}
+		else {
+			brw =userService.register(user);
+		}
+
+		return brw;
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public UserResponseWrapper login(@RequestBody String body, HttpSession session, HttpServletResponse response,@ModelAttribute("currentUser") User userAttribute) {
 		Gson gson = new Gson();
 		User user = gson.fromJson(body, User.class);
+		Validation emailValidator = Validation.getInstance();
+		UserResponseWrapper urw = null;
+		if(!emailValidator.validEmail(user.getEmail())) {
+			urw = new UserResponseWrapper();
+			urw.setErrorMessage("invalid email format");
+			return urw;
+		}
 
 		User userDb = userRepo.findOneByEmail(user.getEmail());
-		UserResponseWrapper urw = null;
+
 		if (userDb!=null &&enc.matches(user.getPassword(), userDb.getPassword())) {
 			System.out.println("got a match trying to create a session");
 			System.out.println("hitting the controller");
-			urw = new UserResponseWrapper(user, "");
+			urw = new UserResponseWrapper(userDb, "");
 			System.out.println(userDb);
 			System.out.println(urw.toString());
 			//try {
@@ -84,13 +121,13 @@ public class UserController {
 			//}
 //
 
-			session.setAttribute("user_id", userDb.getUserID());
+			session.setAttribute("user_id", userDb.getUserId());
 			session.setAttribute("first_name", userDb.getFirstName());
 			session.setAttribute("last_name", userDb.getLastName());
 			userAttribute.setFirstName(userDb.getFirstName());
 			userAttribute.setLastName(userDb.getLastName());
-			userAttribute.setUserID(userDb.getUserID());
-			session.setAttribute("user_id", userDb.getUserID());
+			userAttribute.setUserId(userDb.getUserId());
+			session.setAttribute("user_id", userDb.getUserId());
 			session.setAttribute("first_name", userDb.getFirstName());
 			session.setAttribute("last_name", userDb.getLastName());
 			

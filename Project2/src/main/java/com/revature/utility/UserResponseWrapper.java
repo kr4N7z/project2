@@ -12,16 +12,17 @@ import com.revature.models.User;
 public class UserResponseWrapper extends User{
 	String errorMessage;
 	
-	UserResponseWrapper(){
+	public UserResponseWrapper(){
 		
 	}
 	
 	public UserResponseWrapper(User user,String  errorMessage){
 		super();
 		this.setEmail(user.getEmail());
+		this.setPassword(user.getPassword());
 		this.setFirstName(user.getFirstName());
 		this.setLastName(user.getLastName());
-		this.setUserID(user.getUserID());
+		this.setUserId(user.getUserId());
 		this.setUserType(user.getUserType());
 		this.setLatitude(user.getLastLatitude());
 		this.setLongitude(user.getLastLongitude());
@@ -39,7 +40,7 @@ public class UserResponseWrapper extends User{
 
 	@Override
 	public String toString() {
-		return "UserResponseWrapper [errorMessage=" + errorMessage + ", getUserID()=" + getUserID() + ", getUserType()="
+		return "UserResponseWrapper [errorMessage=" + errorMessage + ", getUserId()=" + getUserId() + ", getUserType()="
 				+ getUserType() + ", getEmail()=" + getEmail() + ", getPassword()=" + getPassword()
 				+ ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName() + ", getLastLatitude()="
 				+ getLastLatitude() + ", getLastLongitude()=" + getLastLongitude() + ", getLastState()="
