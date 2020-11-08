@@ -20,7 +20,7 @@ public class User {
 	@Id
 	@GeneratedValue(generator = "users_user_id_seq", strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
-	private int userId;
+	private int userID;
 	@Column(name = "user_type")
 	private String userType;
 	@Column
@@ -43,11 +43,11 @@ public class User {
 	private Date lastLogin;
 	
 	
-	public int getUserId() {
-		return userId;
+	public int getUserID() {
+		return userID;
 	}
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 	public String getUserType() {
 		return userType;
@@ -128,7 +128,7 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userType=" + userType + ", email=" + email + ", password=" + password
+		return "User [userID=" + userID + ", userType=" + userType + ", email=" + email + ", password=" + password
 				+ ", firstName=" + firstName + ", lastName=" + lastName + ", lastLatitude=" + lastLatitude
 				+ ", lastLongitude=" + lastLongitude + ", lastState=" + lastState + ", createdOn=" + createdOn
 				+ ", lastLogin=" + lastLogin + "]";
