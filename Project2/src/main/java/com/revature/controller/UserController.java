@@ -82,7 +82,7 @@ public class UserController {
 				 //TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//
+
 
 			session.setAttribute("user_id", userDb.getUserId());
 			session.setAttribute("first_name", userDb.getFirstName());

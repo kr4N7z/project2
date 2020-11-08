@@ -32,7 +32,6 @@ public class FriendshipRepositoryImpl implements FriendshipRepository {
 			
 			s.save(fr);
 			tx.commit();
-			System.out.println("MADE IT");
 		}catch(HibernateException e) {
 			e.printStackTrace();
 			tx.rollback();

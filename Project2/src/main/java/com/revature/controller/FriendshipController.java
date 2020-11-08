@@ -27,18 +27,19 @@ public class FriendshipController {
 	//
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public void insertFriendship(@RequestParam("receiverId") int receiverId, @RequestParam("approved") boolean approved, @RequestParam("userId") int userId) {
-		System.out.println("Not everything is broken");
-		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
-		Friendship fr = new Friendship(userId, receiverId, approved);
-		System.out.println(fr);
-		System.out.println("The brackets are fr");
-		frimpl.insertFriendship(fr);
+		try {
+			FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
+			Friendship fr = new Friendship(userId, receiverId, approved);
+			frimpl.insertFriendship(fr);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public void update(@RequestParam("receiverId") int receiverId, @RequestParam("approved") boolean approved, @RequestParam("userId") int userId) {
 		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
-		Friendship fr = new Friendship(userId, receiverId, approved);
+		Friendship fr = new Friendship(receiverId, userId, approved);
 		frimpl.update(fr);
 	}
 	
@@ -55,7 +56,8 @@ public class FriendshipController {
 		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
 		List<Friendship> friends = frimpl.viewMyFriendships(userId);
 		
-		//System.out.println(friends);
+		System.out.println(friends);
+		System.out.println("hi");
 		return friends; 
 	}
 	
@@ -70,8 +72,11 @@ public class FriendshipController {
 	@RequestMapping(value = "/removeFriendship", method = RequestMethod.POST)
 	public void removeFriendship(@RequestParam("receiverId") int receiverId,  @RequestParam("userId") int userId) {
 		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
+		//System.out.println(userId + " " + receiverId);
 		Friendship fr = frimpl.getFriendship(userId, receiverId);
 		frimpl.removeFriendship(fr);
+		Friendship fr2 = frimpl.getFriendship(receiverId, userId);
+		frimpl.removeFriendship(fr2);
 	}
 	
 	@RequestMapping(value = "/getUnapproved", method = RequestMethod.GET) 
