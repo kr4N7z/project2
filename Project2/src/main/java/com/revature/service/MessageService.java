@@ -27,6 +27,7 @@ public class MessageService {
 		newMessage.setReceivedId(receivedId);
 		newMessage.setMessage(messageTxt);
 		newMessage.setSentTime(new Timestamp(System.currentTimeMillis()));
+		newMessage.setSeen(true);
 		messagesRepository.sendMessage(newMessage);
 	}
 }
