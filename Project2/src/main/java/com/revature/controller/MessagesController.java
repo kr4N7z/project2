@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +22,6 @@ import com.revature.service.MessageService;
 @RestController(value = "messagesController")
 @RequestMapping(path = "/messages")
 @CrossOrigin
-@SessionAttributes("currentUser")
 public class MessagesController {
 	MessageService messageService;
 	
@@ -30,15 +30,14 @@ public class MessagesController {
 	}
 		
 	@RequestMapping(value = "/getMyMessages", method = RequestMethod.GET)
-	public List<Messages> getMyMessages(@RequestParam("userId")int userId){
+	public List<Messages> getMyMessages(@RequestParam("userId") int userId){
 		List<Messages> myMessages;
 		myMessages = messageService.getMyMessages(userId);
 		return myMessages;
 	}
 	
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
-	public void sendMessage(@RequestParam("message") String message, @RequestParam("received_id") int receivedId,
-			@ModelAttribute("currentUser") User userAttribute) {
-		messageService.sendMessage(userAttribute.getUserId(), receivedId, message);
+	public void sendMessage(@RequestBody Messages chatbody) {
+		messageService.sendMessage(chatbody.getSenderId(), chatbody.getReceivedId(), chatbody.getMessage());
 	}
 }
