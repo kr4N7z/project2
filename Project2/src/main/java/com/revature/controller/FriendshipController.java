@@ -53,9 +53,7 @@ public class FriendshipController {
 	public List<Friendship> viewMyFriendships( @RequestParam("userId") int userId) {
 		FriendshipRepositoryImpl frimpl = new FriendshipRepositoryImpl();
 		List<Friendship> friends = frimpl.viewMyFriendships(userId);
-		
-		System.out.println(friends);
-		System.out.println("hi");
+
 		return friends; 
 	}
 	
